@@ -6,25 +6,36 @@
 //  Copyright (c) 2013 reenboog. All rights reserved.
 //
 
-#include "Scene.h"
-#include "Sprite.h"
+#import "Scene.h"
+#import "Sprite.h"
+#import "Label.h"
+
+#import <iostream>
+#import <sstream>
 
 Scene::Scene() {
     _back = nullptr;
+    _timeLabel = nullptr;
     _gameOver = true;
 }
 
 Scene::~Scene() {
-    cleanup();
+    //cleanup();
 }
 
 Bool Scene::init() {
     
     _back = new Sprite("res/back.png");
-    _back->setPos(v2(755 / 2, 300));
-    _back->setRotation(0);
-        
+    _back->setPos({400, 400});
+    _back->setRotation(30);
+    //_back->setHidden(true);
+    
     this->addChild(_back);
+    
+    _timeLabel = new Label("This is a sample text. No kidding?", 50);
+    _timeLabel->setPos({100, 200});
+    this->addChild(_timeLabel);
+
     
 //    SoundManager::mngr()->playBackground("md-1.mp3");
 //    SoundManager::mngr()->preloadEffect("btnClick.wav");
@@ -40,6 +51,36 @@ void Scene::render() {
     Node::render();
 }
 
+void Scene::formatTime() {
+    
+    Int tempHour = 0;
+    Int tempMinute = 0;
+    Int tempSecond = 0;
+    
+    string minutesPref = "";
+    string secondsPref = "";
+    
+    tempHour    = _time / 3600;
+    tempMinute  = _time / 60 - tempHour * 60;
+    tempSecond  = _time - (tempHour * 3600 + tempMinute * 60);
+    
+    if(tempMinute < 10) {
+        minutesPref = "0";
+        
+    }
+    
+    if(tempSecond < 10) {
+        secondsPref = "0";
+    }
+    
+    std::stringstream str;
+    stringstream result;
+    
+    result << minutesPref << tempMinute << ":" << secondsPref << tempSecond;
+    
+    _timeLabel->setString(result.str());
+}
+
 Bool Scene::update(Float dt) {
     
     if(_gameOver) {
@@ -47,6 +88,8 @@ Bool Scene::update(Float dt) {
     }
     
     Node::update(dt);
+    
+    _back->setPos({_back->getPos().x + dt * 30, _back->getPos().y});
     
     tick(dt);
     
@@ -86,5 +129,7 @@ Int Scene::getScore() {
 }
 
 void Scene::tick(Float dt) {
+    _time += dt;
     
+    formatTime();
 }

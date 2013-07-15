@@ -26,7 +26,7 @@ class Scene;
     GLuint _colorSlot;
     
     Bool _isNextDeltaTimeZero;
-    struct timeval *_lastUpdate;
+    struct timeval _lastUpdate;
     
     Scene *_scene;
 }

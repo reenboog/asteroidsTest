@@ -32,6 +32,8 @@ protected:
 protected:
     Sprite();
     
+    void loadTexture(string file, Float x, Float y, Float width, Float height);
+    void updateQuad();
 public:
     ~Sprite();
     
@@ -53,9 +55,6 @@ public:
     void setAnchorPoint(Vector2 anchor);
     
     Size2 getSize();
-private:
-    void loadTexture(string file, Float x, Float y, Float width, Float height);
-    void updateQuad();
 };
 
 #endif /* defined(__match3Test__Sprite__) */

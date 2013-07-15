@@ -11,25 +11,38 @@
 @implementation AppDelegate
 
 @synthesize glView = _glView;
+@synthesize window = _window;
+@synthesize viewController = _viewController;
 
 - (void) dealloc {
-    [_glView release];
-    [_window release];
+    self.glView = nil;
+    self.viewController = nil;
+    self.window = nil;
 
     [super dealloc];
 }
 
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions {
+    CGRect bounds = [[UIScreen mainScreen] bounds];
     
-    self.window = [[[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]] autorelease];
+    // rotate bounds since we have a landscape-oriented game
+    bounds = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.height, bounds.size.width);
     
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    _window = [[UIWindow alloc] initWithFrame: bounds];
+    _glView = [[OpenGLView alloc] initWithFrame: bounds];
+
+    _viewController = [[RootViewController alloc] initWithNibName: nil bundle: nil];
+    _viewController.wantsFullScreenLayout = YES;
+    _viewController.view = _glView;
     
-    self.glView = [[[OpenGLView alloc] initWithFrame: screenBounds] autorelease];
-    [self.window addSubview: _glView];
+    if([[UIDevice currentDevice].systemVersion floatValue] < 6.0) {
+        [_window addSubview: _viewController.view];
+    } else {
+        [_window setRootViewController: _viewController];
+    }
+
     
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    [_window makeKeyAndVisible];
 
     return YES;
 }

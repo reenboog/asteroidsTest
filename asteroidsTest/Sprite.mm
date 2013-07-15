@@ -12,12 +12,14 @@
 #import "Common.h"
 
 Sprite::~Sprite() {
-    //------------------------------------------------
+    if(_texture.texture != -1) {
+        glDeleteTextures(1, &_texture.texture);
+    }
+
     printf("-sprite %s destroyed. \n", _file.c_str());
 }
 
 Sprite::Sprite() {
-    
 }
 
 Sprite::Sprite(string file) {
@@ -79,7 +81,7 @@ void Sprite::render() {
     Int diff = offsetof(Vertex, pos);
     
 #define kQuadSize sizeof(_quad.bl)
-	glVertexPointer(2, GL_FLOAT, kQuadSize, (void *) (offset + diff));
+	glVertexPointer(3, GL_FLOAT, kQuadSize, (void *) (offset + diff));
     
     diff = offsetof(Vertex, color);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void *)(offset + diff));
@@ -89,19 +91,6 @@ void Sprite::render() {
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-//	glTexCoord2f(_uvCoords[0].u, _uvCoords[0].v);
-//	glVertex3f(hw + anchorCorrection.x, hh + anchorCorrection.y, 0.0f);
-//    
-//	glTexCoord2f(_uvCoords[1].u, _uvCoords[1].v);
-//	glVertex3f(hw + anchorCorrection.x, -hh + anchorCorrection.y, 0.0f);
-//    
-//	glTexCoord2f(_uvCoords[2].u, _uvCoords[2].v);
-//	glVertex3f(-hw + anchorCorrection.x, -hh + anchorCorrection.y, 0.0f);
-//    
-//	glTexCoord2f(_uvCoords[3].u, _uvCoords[3].v);
-//	glVertex3f(-hw + anchorCorrection.x, hh + anchorCorrection.y , 0.0f);
-//    
-//    glEnd();
     glDisable(GL_TEXTURE_2D);
 }
 
@@ -122,10 +111,10 @@ void Sprite::updateQuad() {
     Float hw = _size.w / 2.0;
     Float hh = _size.h / 2.0;
     
-    _quad.br.pos = Vector2{hw + anchorCorrection.x, hh + anchorCorrection.y};
-    _quad.tr.pos = Vector2{hw + anchorCorrection.x, -hh + anchorCorrection.y};
-    _quad.tl.pos = Vector2{-hw + anchorCorrection.x, -hh + anchorCorrection.y};
-    _quad.bl.pos = Vector2{-hw + anchorCorrection.x, hh + anchorCorrection.y};
+    _quad.br.pos = Vector3{hw + anchorCorrection.x, hh + anchorCorrection.y, 0};
+    _quad.tr.pos = Vector3{hw + anchorCorrection.x, -hh + anchorCorrection.y, 0};
+    _quad.tl.pos = Vector3{-hw + anchorCorrection.x, -hh + anchorCorrection.y, 0};
+    _quad.bl.pos = Vector3{-hw + anchorCorrection.x, hh + anchorCorrection.y, 0};
 }
 
 Vector2 Sprite::getAnchorPoint() {

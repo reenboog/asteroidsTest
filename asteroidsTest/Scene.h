@@ -22,7 +22,10 @@ private:
 
     Bool _gameOver;
     
+    Float _time;
+    
     Sprite *_back;
+    Label *_timeLabel;
 public:
     Scene();
     ~Scene();
@@ -43,6 +46,8 @@ public:
     
     //time logic
     void tick(Float dt);
+private:
+    void formatTime();
 };
 
 #endif /* defined(__kingTest__GameScene__) */

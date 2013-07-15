@@ -40,7 +40,7 @@
 - (void) setupRenderBuffer {
     glGenRenderbuffers(1, &_renderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
-    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable: _eaglLayer];
+    [_context renderbufferStorage: GL_RENDERBUFFER fromDrawable: _eaglLayer];
 }
 
 - (void) setupFrameBuffer {
@@ -64,8 +64,6 @@
     
     [_context release];
     _context = nil;
-    
-    delete _lastUpdate;
     
     [super dealloc];
 }
@@ -138,37 +136,44 @@
 - (id) initWithFrame: (CGRect) frame {
     if((self = [super initWithFrame: frame])) {
         
-        _lastUpdate = new struct timeval();
-        
         [self setupLayer];
         [self setupContext];
         [self setupRenderBuffer];
         [self setupFrameBuffer];
         //[self compileShaders];
         
-        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        gettimeofday(&_lastUpdate,  0);
+        
+        CGRect screenBounds = frame;
         
         glViewport(0, 0, screenBounds.size.width, screenBounds.size.height);
         
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         
-        glOrthof(0, screenBounds.size.width, screenBounds.size.height, 0, 1, -1);
+        glOrthof(0, screenBounds.size.width, 0, screenBounds.size.height, -1, 1);
         
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glEnable(GL_TEXTURE_2D);
         
         glClearColor(0, 104.0/255.0, 55.0/255.0, 1.0);
         
         //set up a scene
+
+        [self setupDisplayLink];
         
         _scene = new Scene;
         _scene->init();
-
-        [self setupDisplayLink];
     }
     return self;
 }
@@ -184,7 +189,7 @@
         dt = 0;
         _isNextDeltaTimeZero = NO;
     } else {
-        dt = (now.tv_sec - _lastUpdate->tv_sec) + (now.tv_usec - _lastUpdate->tv_usec) / 1000000.0f;
+        dt = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
         dt = MAX(0, dt);
     }
     
@@ -193,7 +198,7 @@
     [self update: dt];
     [self render];
     
-    *_lastUpdate = now;
+    _lastUpdate = now;
 }
 
 - (void) update: (float) dt {
@@ -205,6 +210,30 @@
     glClear(GL_COLOR_BUFFER_BIT);
     
     _scene->visit();
+    
+    
+    
+//    const GLfloat lineX[] = {
+//        0.0f, 0.0f, 0.0f, //point A
+//        200.0f, 400.0f, 0.0f //point B
+//    };
+// 
+//    
+//    glPushMatrix();
+//    
+//    glTranslatef(0, 0, 0.0);
+//
+    
+//
+//    glColor4f(1.0f, 0.0f, 0.0f, 1.0f); // opaque red
+//    glVertexPointer(3, GL_FLOAT, 0, lineX);
+//    glDrawArrays(GL_LINES, 0, 2);
+//    
+//        
+//    //glDisableClientState(GL_VERTEX_ARRAY);
+//    
+//    glPopMatrix();
+    
 
     [_context presentRenderbuffer: GL_RENDERBUFFER];
 }

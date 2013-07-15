@@ -50,6 +50,8 @@ Texture TextureManager::textureByName(const string &name) {
             exit(1);
         }
         
+        //this stuff doesn't load npot textures, so no automatic padding included for now
+        
         size_t width = CGImageGetWidth(image);
         size_t height = CGImageGetHeight(image);
         

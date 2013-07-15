@@ -27,7 +27,8 @@ typedef double Double;
 
 class Node;
 
-struct Vector2 {
+class Vector2 {
+public:
     Float x, y;
     
     Bool operator == (const Vector2 &r) {
@@ -60,6 +61,11 @@ struct Vector2 {
     }
 };
     
+class Vector3 {
+public:
+    Float x, y, z;
+};
+
 #define v2(x, y) (Vector2{(Float)x, (Float)y})
 
 inline Float cut(Float num, Float min, Float max) {
@@ -103,7 +109,7 @@ struct Color4B {
 };
     
 struct Vertex {
-    Vector2 pos;
+    Vector3 pos;
     Color4B color;
     UV uv;
 };

@@ -9,11 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "OpenGLView.h"
 
+#import "RootViewController.h"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     OpenGLView *_glView;
+    UIWindow *_window;
+    
+    RootViewController *_viewController;
 }
 
 @property (retain, nonatomic) UIWindow *window;
-@property (retain, nonatomic) IBOutlet OpenGLView *glView;
+@property (retain, nonatomic) OpenGLView *glView;
+@property (retain, nonatomic) RootViewController *viewController;
 
 @end
