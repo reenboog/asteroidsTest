@@ -19,7 +19,7 @@ private:
 
     Float _fontSize;
 public:
-    Label(const string &str, Float size = 20, const string &font = "Arial");
+    Label(const string &str, Float size = 20, const string &font = "Commo");
     ~Label();
     
     void setString(const string &str);

@@ -7,6 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "OpenGLView.h"
+#import "RootViewController.h"
+#import "TextureManager.h"
+#import "SoundManager.h"
+
+#import "Common.h"
 
 @implementation AppDelegate
 
@@ -23,10 +29,7 @@
 }
 
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions {
-    CGRect bounds = [[UIScreen mainScreen] bounds];
-    
-    // rotate bounds since we have a landscape-oriented game
-    bounds = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.height, bounds.size.width);
+    CGRect bounds = GetBounds();
     
     _window = [[UIWindow alloc] initWithFrame: bounds];
     _glView = [[OpenGLView alloc] initWithFrame: bounds];
@@ -67,6 +70,8 @@
 
 - (void) applicationWillTerminate: (UIApplication *) application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    delete TextureManager::mngr();
+    delete SoundManager::mngr();
 }
 
 @end

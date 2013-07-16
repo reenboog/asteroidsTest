@@ -26,6 +26,8 @@ private:
     
     Sprite *_back;
     Label *_timeLabel;
+    
+    Size2 _bounds;
 public:
     Scene();
     ~Scene();

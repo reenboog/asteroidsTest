@@ -24,8 +24,9 @@ protected:
     Texture _texture;
     
     Quad _quad;
+    
+    Color4B _color;
 
-    //UV _uvCoords[4];
     Size2 _size;
     
     Vector2 _anchorPoint;
@@ -53,6 +54,9 @@ public:
     
     Vector2 getAnchorPoint();
     void setAnchorPoint(Vector2 anchor);
+    
+    void setColor(const Color4B &color);
+    Color4B getColor();
     
     Size2 getSize();
 };

@@ -14,7 +14,7 @@
     if(!skip && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         NSString *nameWithoutExtension = [fileName stringByDeletingPathExtension];
         NSString *extension = [fileName pathExtension];
-        NSString *newName = [NSString stringWithFormat:@"%@-ipad.%@", nameWithoutExtension, extension];        
+        NSString *newName = [NSString stringWithFormat:@"res/%@-ipad.%@", nameWithoutExtension, extension];        
         return newName;
     }
     return fileName;

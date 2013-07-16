@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OpenGLView.h"
 
-#import "RootViewController.h"
+@class OpenGLView;
+@class  RootViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     OpenGLView *_glView;

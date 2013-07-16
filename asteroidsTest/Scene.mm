@@ -9,6 +9,11 @@
 #import "Scene.h"
 #import "Sprite.h"
 #import "Label.h"
+#import "Mesh.h"
+
+#import "Common.h"
+
+#import "SoundManager.h"
 
 #import <iostream>
 #import <sstream>
@@ -25,20 +30,27 @@ Scene::~Scene() {
 
 Bool Scene::init() {
     
-    _back = new Sprite("res/back.png");
+    CGRect bounds = GetBounds();
+    
+    Bool isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+    
+    _back = new Sprite("back.png");
     _back->setPos({400, 400});
     _back->setRotation(30);
     //_back->setHidden(true);
-    
     this->addChild(_back);
     
-    _timeLabel = new Label("This is a sample text. No kidding?", 50);
-    _timeLabel->setPos({100, 200});
+    Int fontSize = isIpad ? 40 : 15;
+    
+    _timeLabel = new Label("This is a sample text. No kidding?", fontSize, "Commo");
+    _timeLabel->setPos({bounds.size.width / 2.0f, bounds.size.height * 0.95f});
     this->addChild(_timeLabel);
 
     
-//    SoundManager::mngr()->playBackground("md-1.mp3");
-//    SoundManager::mngr()->preloadEffect("btnClick.wav");
+    SoundManager::mngr()->playBackground("bgMusic");
+    SoundManager::mngr()->preloadEffect("shoot0");
+    SoundManager::mngr()->preloadEffect("shoot1");
+    
 //    SoundManager::mngr()->preloadEffect("chipBreak.wav");
 //    SoundManager::mngr()->preloadEffect("lvlComplete.wav");
     
@@ -85,6 +97,23 @@ Bool Scene::update(Float dt) {
     
     if(_gameOver) {
         return false;
+    }
+    
+    static float sec = 0;
+    sec += dt;
+    
+    static float sec1 = 0;
+    sec1 += dt;
+
+    
+    if(sec > 3) {
+        sec = 0;
+        SoundManager::mngr()->playEffect("shoot0");
+    }
+    
+    if(sec1 > 2) {
+        sec1 = 0;
+        SoundManager::mngr()->playEffect("shoot1");
     }
     
     Node::update(dt);

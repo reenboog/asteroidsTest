@@ -4,7 +4,10 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>spaceFont.otf</string>
+		<string>res/spaceFont.ttf</string>
+		<string>res/radioSpace.ttf</string>
+		<string>res/erbosDraco.ttf</string>
+		<string>res/commo.otf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

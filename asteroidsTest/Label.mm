@@ -101,19 +101,20 @@ void Label::render() {
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
+    glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, _texture.texture);
     
     Int offset = (Int)&_quad;
-    Int diff = offsetof(Vertex, pos);
+    Int diff = offsetof(VertexPosColorUV, pos);
     
 #define kQuadSize sizeof(_quad.bl)
 	glVertexPointer(3, GL_FLOAT, kQuadSize, (void *) (offset + diff));
     
-    diff = offsetof(Vertex, color);
+    diff = offsetof(VertexPosColorUV, color);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void *)(offset + diff));
     
-    diff = offsetof(Vertex, uv);
+    diff = offsetof(VertexPosColorUV, uv);
 	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void *)(offset + diff));
     
     glScalef(getScaleX(), getScaleY() * -1, 1.0);
@@ -121,4 +122,5 @@ void Label::render() {
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     glDisable(GL_TEXTURE_2D);
+    glDisable(GL_BLEND);
 }

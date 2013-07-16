@@ -20,6 +20,7 @@ using namespace std;
 
 typedef char Char;
 typedef unsigned char UChar;
+typedef unsigned int UInt;
 typedef int Int;
 typedef bool Bool;
 typedef float Float;
@@ -107,22 +108,27 @@ struct Color4B {
     UChar b;
     UChar a;
 };
+
+struct VertexPosColor {
+    Vector3 pos;
+    Color4B color;
+};
     
-struct Vertex {
+struct VertexPosColorUV {
     Vector3 pos;
     Color4B color;
     UV uv;
 };
     
 struct Quad {
-    Vertex tl;
-    Vertex bl;
-    Vertex tr;
-    Vertex br;
+    VertexPosColorUV tl;
+    VertexPosColorUV bl;
+    VertexPosColorUV tr;
+    VertexPosColorUV br;
 };
     
 typedef vector<Node *> NodePool;
 typedef map<string, Texture> TextureMap;
-
+typedef vector<VertexPosColor> VertexPosColorPool;
 
 #endif

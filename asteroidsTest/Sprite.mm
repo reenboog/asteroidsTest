@@ -74,24 +74,26 @@ void Sprite::cleanup() {
 void Sprite::render() {
     Node::render();
     
+    glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, _texture.texture);
     
     Int offset = (Int)&_quad;
-    Int diff = offsetof(Vertex, pos);
+    Int diff = offsetof(VertexPosColorUV, pos);
     
-#define kQuadSize sizeof(_quad.bl)
-	glVertexPointer(3, GL_FLOAT, kQuadSize, (void *) (offset + diff));
+#define kQuadVertexStride sizeof(_quad.bl)
+	glVertexPointer(3, GL_FLOAT, kQuadVertexStride, (void *) (offset + diff));
     
-    diff = offsetof(Vertex, color);
-	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadSize, (void *)(offset + diff));
+    diff = offsetof(VertexPosColorUV, color);
+	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadVertexStride, (void *)(offset + diff));
     
-    diff = offsetof(Vertex, uv);
-	glTexCoordPointer(2, GL_FLOAT, kQuadSize, (void *)(offset + diff));
+    diff = offsetof(VertexPosColorUV, uv);
+	glTexCoordPointer(2, GL_FLOAT, kQuadVertexStride, (void *)(offset + diff));
 	
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     glDisable(GL_TEXTURE_2D);
+    glDisable(GL_BLEND);
 }
 
 Bool Sprite::update(Float dt) {
@@ -125,4 +127,17 @@ void Sprite::setAnchorPoint(Vector2 anchor) {
     _anchorPoint = anchor;
     
     updateQuad();
+}
+
+void Sprite::setColor(const Color4B &color) {
+    _color = color;
+    
+    _quad.bl.color = _color;
+    _quad.br.color = _color;
+    _quad.tl.color = _color;
+    _quad.tr.color = _color;
+}
+
+Color4B Sprite::getColor() {
+    return _color;
 }

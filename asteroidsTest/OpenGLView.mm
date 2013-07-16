@@ -156,17 +156,13 @@
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-        
-        glEnableClientState(GL_VERTEX_ARRAY);
+        //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glEnable(GL_TEXTURE_2D);
         
-        glClearColor(0, 104.0/255.0, 55.0/255.0, 1.0);
+        glClearColor(0, 0, 0, 1.0);
         
         //set up a scene
 

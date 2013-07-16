@@ -11,6 +11,10 @@
 		B83DDC1E17942A9500C06998 /* Label.mm in Sources */ = {isa = PBXBuildFile; fileRef = B83DDC1D17942A9500C06998 /* Label.mm */; };
 		B83DDC2117942FBD00C06998 /* Texture2d.m in Sources */ = {isa = PBXBuildFile; fileRef = B83DDC1F17942FBD00C06998 /* Texture2d.m */; };
 		B842E2101792E525009AA90A /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = B842E20E1792E525009AA90A /* Scene.mm */; };
+		B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8CE55551794F0D100E980D9 /* SoundManager.mm */; };
+		B8CE55591794F33200E980D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE55581794F33200E980D9 /* OpenAL.framework */; };
+		B8CE555B1794F8F700E980D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE555A1794F8F700E980D9 /* AudioToolbox.framework */; };
+		B8CE556117950E7300E980D9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE556017950E7300E980D9 /* AVFoundation.framework */; };
 		B8DBE70217931189001A1CB6 /* res in Resources */ = {isa = PBXBuildFile; fileRef = B8DBE70117931189001A1CB6 /* res */; };
 		B8F2DAFC179284E400A809B8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F2DAFB179284E400A809B8 /* UIKit.framework */; };
 		B8F2DAFE179284E400A809B8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F2DAFD179284E400A809B8 /* Foundation.framework */; };
@@ -24,14 +28,14 @@
 		B8F2DB1A1792857300A809B8 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8F2DB191792857300A809B8 /* OpenGLView.mm */; };
 		B8F2DB1C1792859500A809B8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F2DB1B1792859500A809B8 /* OpenGLES.framework */; };
 		B8F2DB1E1792859A00A809B8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F2DB1D1792859A00A809B8 /* QuartzCore.framework */; };
-		B8F2DB2217928B0400A809B8 /* BasicVertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B8F2DB2117928B0400A809B8 /* BasicVertex.glsl */; };
-		B8F2DB2417928B7400A809B8 /* BasicFragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = B8F2DB2317928B7400A809B8 /* BasicFragment.glsl */; };
 		B8F2DB2717928C5900A809B8 /* FilesUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8F2DB2617928C5900A809B8 /* FilesUtils.mm */; };
 		B8F2DB2C17929E7900A809B8 /* Types.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8F2DB2B17929E7800A809B8 /* Types.mm */; };
 		B8F2DB2F1792AD2700A809B8 /* Node.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8F2DB2D1792AD2600A809B8 /* Node.mm */; };
 		B8F2DB321792AF2F00A809B8 /* TextureManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8F2DB301792AF2E00A809B8 /* TextureManager.mm */; };
 		B8F2DB341792B4EF00A809B8 /* Default-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B8F2DB331792B4EF00A809B8 /* Default-ipad.png */; };
 		B8F2DB371792B69D00A809B8 /* Sprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8F2DB351792B69C00A809B8 /* Sprite.mm */; };
+		B8FD70AC179467BF00785F12 /* Common.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8FD70AB179467BE00785F12 /* Common.mm */; };
+		B8FD70AF1794731D00785F12 /* Mesh.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8FD70AD1794731D00785F12 /* Mesh.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +47,11 @@
 		B83DDC2017942FBD00C06998 /* Texture2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2d.h; sourceTree = "<group>"; };
 		B842E20E1792E525009AA90A /* Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Scene.mm; sourceTree = "<group>"; };
 		B842E20F1792E525009AA90A /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		B8CE55551794F0D100E980D9 /* SoundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundManager.mm; sourceTree = "<group>"; };
+		B8CE55561794F0D100E980D9 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		B8CE55581794F33200E980D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		B8CE555A1794F8F700E980D9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B8CE556017950E7300E980D9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B8DBE70117931189001A1CB6 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		B8F2DAF8179284E400A809B8 /* asteroidsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = asteroidsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8F2DAFB179284E400A809B8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -62,8 +71,6 @@
 		B8F2DB1B1792859500A809B8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B8F2DB1D1792859A00A809B8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B8F2DB1F179286AD00A809B8 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		B8F2DB2117928B0400A809B8 /* BasicVertex.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BasicVertex.glsl; sourceTree = "<group>"; };
-		B8F2DB2317928B7400A809B8 /* BasicFragment.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BasicFragment.glsl; sourceTree = "<group>"; };
 		B8F2DB2517928C5900A809B8 /* FilesUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilesUtils.h; sourceTree = "<group>"; };
 		B8F2DB2617928C5900A809B8 /* FilesUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FilesUtils.mm; sourceTree = "<group>"; };
 		B8F2DB2A17929E7800A809B8 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
@@ -75,6 +82,9 @@
 		B8F2DB331792B4EF00A809B8 /* Default-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-ipad.png"; sourceTree = "<group>"; };
 		B8F2DB351792B69C00A809B8 /* Sprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Sprite.mm; sourceTree = "<group>"; };
 		B8F2DB361792B69D00A809B8 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
+		B8FD70AB179467BE00785F12 /* Common.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Common.mm; sourceTree = "<group>"; };
+		B8FD70AD1794731D00785F12 /* Mesh.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Mesh.mm; sourceTree = "<group>"; };
+		B8FD70AE1794731D00785F12 /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8CE556117950E7300E980D9 /* AVFoundation.framework in Frameworks */,
+				B8CE555B1794F8F700E980D9 /* AudioToolbox.framework in Frameworks */,
+				B8CE55591794F33200E980D9 /* OpenAL.framework in Frameworks */,
 				B8F2DB1E1792859A00A809B8 /* QuartzCore.framework in Frameworks */,
 				B8F2DB1C1792859500A809B8 /* OpenGLES.framework in Frameworks */,
 				B8F2DAFC179284E400A809B8 /* UIKit.framework in Frameworks */,
@@ -96,6 +109,9 @@
 		B8F2DAEF179284E400A809B8 = {
 			isa = PBXGroup;
 			children = (
+				B8CE556017950E7300E980D9 /* AVFoundation.framework */,
+				B8CE555A1794F8F700E980D9 /* AudioToolbox.framework */,
+				B8CE55581794F33200E980D9 /* OpenAL.framework */,
 				B8F2DB1D1792859A00A809B8 /* QuartzCore.framework */,
 				B8F2DB1B1792859500A809B8 /* OpenGLES.framework */,
 				B8F2DB01179284E400A809B8 /* asteroidsTest */,
@@ -126,7 +142,6 @@
 			isa = PBXGroup;
 			children = (
 				B8DBE70117931189001A1CB6 /* res */,
-				B8F2DB2017928AE700A809B8 /* shaders */,
 				B8F2DB0A179284E400A809B8 /* AppDelegate.h */,
 				B8F2DB0B179284E400A809B8 /* AppDelegate.mm */,
 				B83DDC1417939D8300C06998 /* RootViewController.h */,
@@ -136,6 +151,7 @@
 				B8F2DB2517928C5900A809B8 /* FilesUtils.h */,
 				B8F2DB2617928C5900A809B8 /* FilesUtils.mm */,
 				B8F2DB1F179286AD00A809B8 /* Common.h */,
+				B8FD70AB179467BE00785F12 /* Common.mm */,
 				B8F2DB2A17929E7800A809B8 /* Types.h */,
 				B8F2DB2B17929E7800A809B8 /* Types.mm */,
 				B8F2DB2D1792AD2600A809B8 /* Node.mm */,
@@ -146,8 +162,12 @@
 				B83DDC2017942FBD00C06998 /* Texture2d.h */,
 				B8F2DB351792B69C00A809B8 /* Sprite.mm */,
 				B8F2DB361792B69D00A809B8 /* Sprite.h */,
+				B8FD70AD1794731D00785F12 /* Mesh.mm */,
+				B8FD70AE1794731D00785F12 /* Mesh.h */,
 				B842E20E1792E525009AA90A /* Scene.mm */,
 				B842E20F1792E525009AA90A /* Scene.h */,
+				B8CE55551794F0D100E980D9 /* SoundManager.mm */,
+				B8CE55561794F0D100E980D9 /* SoundManager.h */,
 				B8F2DB301792AF2E00A809B8 /* TextureManager.mm */,
 				B8F2DB311792AF2F00A809B8 /* TextureManager.h */,
 				B8F2DB02179284E400A809B8 /* Supporting Files */,
@@ -168,15 +188,6 @@
 				B8F2DB11179284E400A809B8 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B8F2DB2017928AE700A809B8 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				B8F2DB2117928B0400A809B8 /* BasicVertex.glsl */,
-				B8F2DB2317928B7400A809B8 /* BasicFragment.glsl */,
-			);
-			name = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,8 +245,6 @@
 				B8F2DB0E179284E400A809B8 /* Default.png in Resources */,
 				B8F2DB10179284E400A809B8 /* Default@2x.png in Resources */,
 				B8F2DB12179284E400A809B8 /* Default-568h@2x.png in Resources */,
-				B8F2DB2217928B0400A809B8 /* BasicVertex.glsl in Resources */,
-				B8F2DB2417928B7400A809B8 /* BasicFragment.glsl in Resources */,
 				B8F2DB341792B4EF00A809B8 /* Default-ipad.png in Resources */,
 				B8DBE70217931189001A1CB6 /* res in Resources */,
 			);
@@ -260,6 +269,9 @@
 				B83DDC1617939D8300C06998 /* RootViewController.mm in Sources */,
 				B83DDC1E17942A9500C06998 /* Label.mm in Sources */,
 				B83DDC2117942FBD00C06998 /* Texture2d.m in Sources */,
+				B8FD70AC179467BF00785F12 /* Common.mm in Sources */,
+				B8FD70AF1794731D00785F12 /* Mesh.mm in Sources */,
+				B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
