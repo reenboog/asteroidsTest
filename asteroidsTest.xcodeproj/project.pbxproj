@@ -11,6 +11,8 @@
 		B83DDC1E17942A9500C06998 /* Label.mm in Sources */ = {isa = PBXBuildFile; fileRef = B83DDC1D17942A9500C06998 /* Label.mm */; };
 		B83DDC2117942FBD00C06998 /* Texture2d.m in Sources */ = {isa = PBXBuildFile; fileRef = B83DDC1F17942FBD00C06998 /* Texture2d.m */; };
 		B842E2101792E525009AA90A /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = B842E20E1792E525009AA90A /* Scene.mm */; };
+		B85B83D217956408004A4036 /* Object.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85B83D017956408004A4036 /* Object.mm */; };
+		B85B83D517956470004A4036 /* Component.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85B83D317956470004A4036 /* Component.mm */; };
 		B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8CE55551794F0D100E980D9 /* SoundManager.mm */; };
 		B8CE55591794F33200E980D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE55581794F33200E980D9 /* OpenAL.framework */; };
 		B8CE555B1794F8F700E980D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE555A1794F8F700E980D9 /* AudioToolbox.framework */; };
@@ -47,6 +49,10 @@
 		B83DDC2017942FBD00C06998 /* Texture2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2d.h; sourceTree = "<group>"; };
 		B842E20E1792E525009AA90A /* Scene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Scene.mm; sourceTree = "<group>"; };
 		B842E20F1792E525009AA90A /* Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene.h; sourceTree = "<group>"; };
+		B85B83D017956408004A4036 /* Object.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Object.mm; sourceTree = "<group>"; };
+		B85B83D117956408004A4036 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
+		B85B83D317956470004A4036 /* Component.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Component.mm; sourceTree = "<group>"; };
+		B85B83D417956470004A4036 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
 		B8CE55551794F0D100E980D9 /* SoundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundManager.mm; sourceTree = "<group>"; };
 		B8CE55561794F0D100E980D9 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		B8CE55581794F33200E980D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -156,6 +162,10 @@
 				B8F2DB2B17929E7800A809B8 /* Types.mm */,
 				B8F2DB2D1792AD2600A809B8 /* Node.mm */,
 				B8F2DB2E1792AD2600A809B8 /* Node.h */,
+				B85B83D017956408004A4036 /* Object.mm */,
+				B85B83D117956408004A4036 /* Object.h */,
+				B85B83D317956470004A4036 /* Component.mm */,
+				B85B83D417956470004A4036 /* Component.h */,
 				B83DDC1C17942A9500C06998 /* Label.h */,
 				B83DDC1D17942A9500C06998 /* Label.mm */,
 				B83DDC1F17942FBD00C06998 /* Texture2d.m */,
@@ -272,6 +282,8 @@
 				B8FD70AC179467BF00785F12 /* Common.mm in Sources */,
 				B8FD70AF1794731D00785F12 /* Mesh.mm in Sources */,
 				B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */,
+				B85B83D217956408004A4036 /* Object.mm in Sources */,
+				B85B83D517956470004A4036 /* Component.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

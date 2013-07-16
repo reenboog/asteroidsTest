@@ -50,7 +50,7 @@ private:
     
     void init();
 public:
-    ~SoundManager();
+    virtual ~SoundManager();
     
     Bool playEffect(string file);
     Bool playBackground(string file);

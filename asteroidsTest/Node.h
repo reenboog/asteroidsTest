@@ -9,14 +9,14 @@
 #ifndef __kingTest__Node__
 #define __kingTest__Node__
 
-#import "Types.h"
+#include "Types.h"
+#include "Object.h"
 
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-class Node {
+class Node: public Object, public Movable {
 private:
-    Vector2 _pos;
     Float _scaleX;
     Float _scaleY;
     Float _rotation;

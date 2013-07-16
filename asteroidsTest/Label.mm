@@ -12,7 +12,7 @@
 
 #import "Texture2d.h"
 
-Label::Label(const string &str, Float fontSize, const string &font) {
+Label::Label(const string &str, Float fontSize, const string &font): Sprite() {
     _fontSize = fontSize;
     _font = font;
     _tex = nil;

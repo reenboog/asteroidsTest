@@ -20,7 +20,7 @@
 
 #import <mach/mach.h>
 
-Scene::Scene() {
+Scene::Scene(): Node() {
     _back = nullptr;
     _timeLabel = nullptr;
     _gameOver = true;
@@ -39,6 +39,8 @@ Bool Scene::init() {
     _back = new Sprite("back.png");
     _back->setPos({400, 400});
     _back->setRotation(30);
+    
+    _back->applyComponent(MoveBy::runWithPositionDeltaAndDuration({300, 300}, 5));
     //_back->setHidden(true);
     this->addChild(_back);
     
@@ -47,6 +49,8 @@ Bool Scene::init() {
     _timeLabel = new Label("This is a sample text. No kidding?", fontSize, "Commo");
     _timeLabel->setPos({bounds.size.width / 2.0f, bounds.size.height * 0.95f});
     this->addChild(_timeLabel);
+    
+    //_timeLabel->applyComponent(Delay::runWithTime(5));
 
     
     SoundManager::mngr()->playBackground("bgMusic");
@@ -131,7 +135,7 @@ Bool Scene::update(Float dt) {
     
     Node::update(dt);
     
-    _back->setPos({_back->getPos().x + dt * 30, _back->getPos().y});
+    //_back->setPos({_back->getPos().x + dt * 30, _back->getPos().y});
     
     tick(dt);
     

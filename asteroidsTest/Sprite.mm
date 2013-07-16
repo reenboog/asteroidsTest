@@ -19,14 +19,14 @@ Sprite::~Sprite() {
     printf("-sprite %s destroyed. \n", _file.c_str());
 }
 
-Sprite::Sprite() {
+Sprite::Sprite(): Node() {
 }
 
-Sprite::Sprite(string file) {
+Sprite::Sprite(string file): Sprite() {
     loadTexture(file, 0, 0, -1, -1);
 }
 
-Sprite::Sprite(string file, Int x, Int y, Int w, Int h) {
+Sprite::Sprite(string file, Int x, Int y, Int w, Int h): Sprite() {
     
     loadTexture(file, x, y, w, h);
 }

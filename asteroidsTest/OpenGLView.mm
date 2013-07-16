@@ -159,7 +159,7 @@
 }
 
 - (void) update: (float) dt {
-    _scene->update(dt);
+    _scene->loop(dt);
 }
 
 - (void) render {

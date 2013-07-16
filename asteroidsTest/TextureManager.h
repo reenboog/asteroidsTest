@@ -19,7 +19,7 @@ private:
 private:
     TextureManager();
 public:
-    ~TextureManager();
+    virtual ~TextureManager();
     
     Texture textureByName(const string &name);
 

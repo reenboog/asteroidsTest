@@ -238,7 +238,7 @@ Bool SoundManager::playBackground(string file) {
                                                       error: &error];
 	[_bgMusic setDelegate: _playerListener];
 	[_bgMusic setNumberOfLoops: -1];	// Negative number means loop forever
-    [_bgMusic setVolume: 0.6];
+    [_bgMusic setVolume: 0.1];
     
     playBackgroundIfAny();
     return true;

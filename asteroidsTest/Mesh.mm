@@ -8,7 +8,7 @@
 
 #include "Mesh.h"
 
-Mesh::Mesh() {
+Mesh::Mesh(): Node() {
     _lineWidth = 10.0;
 }
 

@@ -77,6 +77,7 @@ void Node::loop(Float dt) {
         node->loop(dt);
     }
     
+    updateComponents(dt);
     update(dt);
 }
 

@@ -27,6 +27,7 @@ typedef float Float;
 typedef double Double;
 
 class Node;
+class Component;
 
 class Vector2 {
 public:
@@ -59,6 +60,10 @@ public:
     Vector2& operator -=(const Vector2 &r) {
         *this += -r;
         return *this;
+    }
+    
+    Vector2 operator -(const Vector2 &r) {
+        return Vector2{x - r.x, y - r.y};
     }
 };
     
@@ -130,5 +135,6 @@ struct Quad {
 typedef vector<Node *> NodePool;
 typedef map<string, Texture> TextureMap;
 typedef vector<VertexPosColor> VertexPosColorPool;
+typedef vector<Component *> ComponentPool;
 
 #endif
