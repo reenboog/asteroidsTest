@@ -17,7 +17,7 @@
         NSString *newName = [NSString stringWithFormat:@"res/%@-ipad.%@", nameWithoutExtension, extension];        
         return newName;
     }
-    return fileName;
+    return [NSString stringWithFormat: @"res/%@", fileName];
 }
 
 @end

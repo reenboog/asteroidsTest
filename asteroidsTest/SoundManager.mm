@@ -42,13 +42,9 @@ SoundManager::~SoundManager() {
     purge();
 
     [_playerListener release];
+    _playerListener = nil;
     //alDeleteSources(1, &_outputSource);
-    
-    for(Int i = 1; i <= kMaxAudioOutputSources; ++i) {
-        ALuint outputSource = _outputSources[i - 1];
-        alDeleteSources(i, &outputSource);
-    }
-    
+        
     alcDestroyContext(_openALContext);
     alcCloseDevice(_openALDevice);
 }
@@ -66,23 +62,10 @@ SoundManager::SoundManager() {
 
 void SoundManager::init() {
     _openALDevice = alcOpenDevice(NULL);
-    //[self checkOpenAlError:@"open devcie"];
-    
-    // the context keeps track of current OpenAL state.
-    // create one and associate it with the device.
     _openALContext = alcCreateContext(_openALDevice, NULL);
-    //[self checkOpenAlError:@"create context"];
     
-    // make the context the current context and we're good to start using OpenAL.
     alcMakeContextCurrent(_openALContext);
-    //[self checkOpenAlError:@"make context current"];
-    
-    // sources emit sound.
-    // generate a single output source and note its numeric identifier.
-    // this allocates memory.
-    
-    //_outputSources.resize(kMaxAudioOutputSources);
-    
+
     for(Int i = 1; i <= kMaxAudioOutputSources; ++i) {
         
         ALuint outputSource;
@@ -93,10 +76,7 @@ void SoundManager::init() {
         
         alSourcef(outputSource, AL_GAIN, 1.0f);
         
-        //_outputSources[i - 1] = outputSource;
         _outputSources.push_back(outputSource);
-        
-        NSLog(@"[%i[", _outputSources[i - 1]);
     }
 }
 
@@ -115,6 +95,10 @@ void SoundManager::purge() {
         alDeleteBuffers(1, &outputBuffer);
     }
     
+    for(Int i = 1; i <= kMaxAudioOutputSources; ++i) {
+        ALuint outputSource = _outputSources[i - 1];
+        alDeleteSources(i, &outputSource);
+    }
     
     _effects.clear();
     
@@ -202,6 +186,11 @@ ALuint SoundManager::loadEffect(string file) {
     
     if(0 != openResult) {
         NSLog(@"An error occurred when attempting to open the audio file %@: %ld", filePath, openResult);
+        
+        if(audioData) {
+            free(audioData);
+            audioData = NULL;
+        }
         return -1;
     }
     
@@ -249,7 +238,7 @@ Bool SoundManager::playBackground(string file) {
                                                       error: &error];
 	[_bgMusic setDelegate: _playerListener];
 	[_bgMusic setNumberOfLoops: -1];	// Negative number means loop forever
-    //[_bgMusic setVolume: 0.6];
+    [_bgMusic setVolume: 0.6];
     
     playBackgroundIfAny();
     return true;

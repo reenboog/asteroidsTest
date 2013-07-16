@@ -40,6 +40,7 @@
 - (void) setupRenderBuffer {
     glGenRenderbuffers(1, &_renderBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
+
     [_context renderbufferStorage: GL_RENDERBUFFER fromDrawable: _eaglLayer];
 }
 
@@ -59,6 +60,8 @@
 // Replace dealloc method with this
 - (void) dealloc {
     
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+    
     delete _scene;
     _scene = nullptr;
     
@@ -68,73 +71,20 @@
     [super dealloc];
 }
 
-//- (GLuint) compileShader: (NSString *) name withType: (GLenum) shaderType {
-//    
-//    NSString *shaderPath = [[NSBundle mainBundle] pathForResource: name ofType: @"glsl"];
-//    NSError *error = NULL;
-//    
-//    NSString *shaderContents = [NSString stringWithContentsOfFile: shaderPath
-//                                                         encoding: NSUTF8StringEncoding
-//                                                            error: &error];
-//    if(!shaderContents) {
-//        NSLog(@"Error loading shader: %@", error.localizedDescription);
-//        exit(1);
-//    }
-//    
-//    GLuint shader = glCreateShader(shaderType);
-//    const char *shaderStringUTF8 = [shaderContents UTF8String];
-//    int shaderStringLength = shaderContents.length;
-//    
-//    glShaderSource(shader, 1, &shaderStringUTF8, &shaderStringLength);
-//    glCompileShader(shader);
-//    
-//    GLint compileSuccess;
-//    glGetShaderiv(shader, GL_COMPILE_STATUS, &compileSuccess);
-//
-//    if(compileSuccess == GL_FALSE) {
-//        GLchar messages[256];
-//        
-//        glGetShaderInfoLog(shader, sizeof(messages), 0, &messages[0]);
-//
-//        NSString *messageString = [NSString stringWithUTF8String: messages];
-//        NSLog(@"%@", messageString);
-//        exit(1);
-//    }
-//    
-//    return shader;
-//}
+- (void) onEnterBackground {
+    _readyToRender = false;
+}
 
-//- (void) compileShaders {
-//    GLuint vertexShader = [self compileShader: @"BasicVertex" withType: GL_VERTEX_SHADER];
-//    GLuint fragmentShader = [self compileShader: @"BasicFragment" withType: GL_FRAGMENT_SHADER];
-//    
-//    GLuint programHandle = glCreateProgram();
-//    glAttachShader(programHandle, vertexShader);
-//    glAttachShader(programHandle, fragmentShader);
-//    glLinkProgram(programHandle);
-//    
-//    GLint linkSuccess;
-//    glGetProgramiv(programHandle, GL_LINK_STATUS, &linkSuccess);
-//
-//    if(linkSuccess == GL_FALSE) {
-//        GLchar messages[256];
-//        glGetProgramInfoLog(programHandle, sizeof(messages), 0, &messages[0]);
-//        NSString *messageString = [NSString stringWithUTF8String:messages];
-//        NSLog(@"%@", messageString);
-//        exit(1);
-//    }
-//    
-//    glUseProgram(programHandle);
-//    
-//    _positionSlot = glGetAttribLocation(programHandle, "Position");
-//    _colorSlot = glGetAttribLocation(programHandle, "SourceColor");
-//    
-//    glEnableVertexAttribArray(_positionSlot);
-//    glEnableVertexAttribArray(_colorSlot);
-//}
+- (void) onEnterForeground {
+    gettimeofday(&_lastUpdate,  0);
+    
+    _readyToRender = true;
+}
 
 - (id) initWithFrame: (CGRect) frame {
     if((self = [super initWithFrame: frame])) {
+        
+        _readyToRender = false;
         
         [self setupLayer];
         [self setupContext];
@@ -163,11 +113,22 @@
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
         glClearColor(0, 0, 0, 1.0);
+
+        // reset timers when leaving active state
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(onEnterForeground)
+                                                     name: UIApplicationDidBecomeActiveNotification
+                                                   object: nil];
         
-        //set up a scene
+        //disable display link when entering background
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(onEnterBackground)
+                                                     name: UIApplicationDidEnterBackgroundNotification
+                                                   object: nil];
 
         [self setupDisplayLink];
         
+        // set up a scene
         _scene = new Scene;
         _scene->init();
     }
@@ -202,6 +163,9 @@
 }
 
 - (void) render {
+    if(!_readyToRender) {
+        return;
+    }
     
     glClear(GL_COLOR_BUFFER_BIT);
     

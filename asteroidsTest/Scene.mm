@@ -18,6 +18,8 @@
 #import <iostream>
 #import <sstream>
 
+#import <mach/mach.h>
+
 Scene::Scene() {
     _back = nullptr;
     _timeLabel = nullptr;
@@ -106,15 +108,26 @@ Bool Scene::update(Float dt) {
     sec1 += dt;
 
     
-    if(sec > 3) {
+    if(sec > 2) {
         sec = 0;
         SoundManager::mngr()->playEffect("shoot0");
     }
     
-    if(sec1 > 2) {
-        sec1 = 0;
-        SoundManager::mngr()->playEffect("shoot1");
-    }
+//    if(sec1 > 3) {
+//        sec1 = 0;
+//        //SoundManager::mngr()->playEffect("shoot1");
+//        struct task_basic_info info;
+//        mach_msg_type_number_t size = sizeof(info);
+//        kern_return_t kerr = task_info(mach_task_self(),
+//                                       TASK_BASIC_INFO,
+//                                       (task_info_t)&info,
+//                                       &size);
+//        if( kerr == KERN_SUCCESS ) {
+//            NSLog(@"Memory in use (in bytes): %u", info.resident_size);
+//        } else {
+//            NSLog(@"Error with task_info(): %s", mach_error_string(kerr));
+//        }
+//    }
     
     Node::update(dt);
     

@@ -28,6 +28,8 @@ class Scene;
     Bool _isNextDeltaTimeZero;
     struct timeval _lastUpdate;
     
+    Bool _readyToRender;
+    
     Scene *_scene;
 }
 

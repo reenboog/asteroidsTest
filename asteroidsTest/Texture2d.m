@@ -149,7 +149,7 @@
 	
 	
 	image = [uiImage CGImage];
-	orientation = [uiImage imageOrientation]; 
+	//orientation = [uiImage imageOrientation];
 	
 	if(image == NULL) {
 		[self release];
