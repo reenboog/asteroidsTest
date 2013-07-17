@@ -14,16 +14,38 @@ Object::Object() {
 
 Object::~Object() {
     for(Component *component: _components) {
-        detachComponent(component);
+        delete component;
     }
     
     _components.clear();
 }
 
-void Object::applyComponent(Component *component) {
+void Object::maybeAddComponents() {
+    if(!_componentsToAdd.empty()) {
+        for(Component *component: _componentsToAdd) {
+            _components.push_back(component);
+        }
+        
+        _componentsToAdd.clear();
+    }
+}
+
+void Object::maybeRemoveComponents() {
+    if(!_componentsToRemove.empty()) {
+        for(Component *component: _componentsToRemove) {
+            _components.erase(remove(_components.begin(), _components.end(), component));
+            delete component;
+        }
+        
+        _componentsToRemove.clear();
+    }
+}
+
+void Object::applyComponent(Component *component, Bool suspend) {
     if(component) {
-        _components.push_back(component);
-        component->attachToTarget(this);
+        _componentsToAdd.push_back(component);
+        // should I attach this in maybeAdd...?
+        component->attachToTarget(this, suspend);
     }
 }
 
@@ -32,15 +54,24 @@ void Object::detachComponent(Component *component) {
         auto compIt = find(_components.begin(), _components.end(), component);
         
         if(compIt != _components.end()) {
-            delete *compIt;
-            _components.erase(compIt);
+            _componentsToRemove.push_back(component);
         }
     }
 }
 
 void Object::updateComponents(Float dt) {
+    maybeAddComponents();
+    
     for(Component *component: _components) {
         component->update(dt);
+    }
+    
+    maybeRemoveComponents();
+    
+    for(Component *component: _components) {
+        if(component->isAboutToDie()) {
+            component->detachFromTarget();
+        }
     }
 }
 

@@ -20,6 +20,7 @@ protected:
     // weak ref
     Object *_target;
     Bool _running;
+    Bool _aboutToDie;
 protected:
     Component();
     // components can be deleted by their parent Objects only or other components
@@ -29,11 +30,17 @@ protected:
     void attachToTarget(Object *target, Bool suspend = false);
     void done();
     
-    virtual void tick(Float dt) = 0;
     virtual void setUp() = 0;
     
     void update(Float dt);
+
+    void maybeDie();
 public:
+    Bool isRunning();
+    Bool isAboutToDie();
+    
+    virtual void tick(Float dt) = 0;
+    
     void run();
     void stop();
     void pause();
@@ -50,6 +57,7 @@ protected:
     void setUp();
     
     Delay(Float time);
+    virtual ~Delay();
 public:
     static Component * runWithTime(Float time);
 };
@@ -66,6 +74,7 @@ protected:
     void setUp();
     
     MoveTo(const Vector2 &pos, Float time);
+    virtual ~MoveTo();
 public:
     static Component * runWithPositionAndDuration(const Vector2 &pos, Float time);
 private:
@@ -76,6 +85,7 @@ private:
 class MoveBy: public MoveTo {
 protected:
     MoveBy(const Vector2 &pos, Float time);
+    virtual ~MoveBy();
 public:
     void setUp();
 
@@ -96,6 +106,7 @@ protected:
     void setUp();
     
     ScaleTo(Float scaleX, Float scaleY, Float time);
+    virtual ~ScaleTo();
 public:
     static Component *runWithScale(Float scale, Float time);
     static Component *runWithScaleXY(Float scaleX, Float scaleY, Float time);
@@ -116,11 +127,29 @@ protected:
     void setUp();
     
     FadeTo(UChar alpha, Float time);
+    virtual ~FadeTo();
 public:
     static Component * runWithAlpha(UChar alpha, Float time);
 private:
     //do not allow instantiating with this method directly
     static Component * runWithTime(Float time) {return nullptr;};
+};
+
+// sequence
+
+class ComponentSequence: public Component {
+private:
+    ComponentPool _components;
+    Component *_current;
+protected:
+    ComponentSequence(const ComponentPool &components);
+    ~ComponentSequence();
+    
+    void tick(Float dt);
+    void setUp();
+    
+public:
+    static Component * runWithComponents(const ComponentPool &components);
 };
 
 #endif /* defined(__asteroidsTest__Component__) */

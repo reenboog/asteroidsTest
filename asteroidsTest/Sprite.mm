@@ -68,6 +68,8 @@ void Sprite::cleanup() {
 void Sprite::render() {
     Node::render();
     
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     glEnable(GL_BLEND);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, _texture.texture);
@@ -80,6 +82,8 @@ void Sprite::render() {
     
     diff = offsetof(VertexPosColorUV, color);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadVertexStride, (void *)(offset + diff));
+    
+    Color4B col = _color;
     
     diff = offsetof(VertexPosColorUV, uv);
 	glTexCoordPointer(2, GL_FLOAT, kQuadVertexStride, (void *)(offset + diff));

@@ -39,10 +39,18 @@ Bool Scene::init() {
     _back = new Sprite("back.png");
     _back->setPos({400, 400});
     _back->setRotation(30);
-    
-    _back->applyComponent(MoveTo::runWithPositionAndDuration({300, 300}, 5));
-    _back->applyComponent(ScaleTo::runWithScale(3, 12));
-    //_back->applyComponent(FadeTo::runWithAlpha(100, 2));
+    _back->setAlpha(20);
+
+    _back->applyComponent(ComponentSequence::runWithComponents(
+                                                               {   MoveBy::runWithPositionDeltaAndDuration({100, 100}, 2.2),
+                                                                   FadeTo::runWithAlpha(100, 3),
+                                                                   ScaleTo::runWithScale(0.2, 1),
+                                                                   FadeTo::runWithAlpha(30, 0.5),
+                                                                   FadeTo::runWithAlpha(200, 0.5),
+                                                                   ScaleTo::runWithScaleXY(0.5, 2.0, 2),
+                                                                   Delay::runWithTime(2),
+                                                                   MoveTo::runWithPositionAndDuration({0, 0}, 0.5)
+                                                               }));
 
     //_back->setHidden(true);
     this->addChild(_back);
@@ -53,15 +61,9 @@ Bool Scene::init() {
     _timeLabel->setPos({bounds.size.width / 2.0f, bounds.size.height * 0.95f});
     this->addChild(_timeLabel);
     
-    //_timeLabel->applyComponent(Delay::runWithTime(5));
-
-    
     SoundManager::mngr()->playBackground("bgMusic");
     SoundManager::mngr()->preloadEffect("shoot0");
     SoundManager::mngr()->preloadEffect("shoot1");
-    
-//    SoundManager::mngr()->preloadEffect("chipBreak.wav");
-//    SoundManager::mngr()->preloadEffect("lvlComplete.wav");
     
     restart();
     
@@ -107,36 +109,7 @@ Bool Scene::update(Float dt) {
     if(_gameOver) {
         return false;
     }
-    
-    static float sec = 0;
-    sec += dt;
-    
-    static float sec1 = 0;
-    sec1 += dt;
-
-    
-    if(sec > 5) {
-        sec = 0;
-        //SoundManager::mngr()->playEffect("shoot0");
-        _back->applyComponent(FadeTo::runWithAlpha(100, 2));
-    }
-    
-//    if(sec1 > 3) {
-//        sec1 = 0;
-//        //SoundManager::mngr()->playEffect("shoot1");
-//        struct task_basic_info info;
-//        mach_msg_type_number_t size = sizeof(info);
-//        kern_return_t kerr = task_info(mach_task_self(),
-//                                       TASK_BASIC_INFO,
-//                                       (task_info_t)&info,
-//                                       &size);
-//        if( kerr == KERN_SUCCESS ) {
-//            NSLog(@"Memory in use (in bytes): %u", info.resident_size);
-//        } else {
-//            NSLog(@"Error with task_info(): %s", mach_error_string(kerr));
-//        }
-//    }
-    
+        
     Node::update(dt);
     
     //_back->setPos({_back->getPos().x + dt * 30, _back->getPos().y});

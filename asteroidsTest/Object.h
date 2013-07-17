@@ -18,13 +18,18 @@
 class Object {
 private:
     ComponentPool _components;
+    ComponentPool _componentsToAdd;
+    ComponentPool _componentsToRemove;
+private:
+    void maybeAddComponents();
+    void maybeRemoveComponents();
 protected:
     void updateComponents(Float dt);
 public:
     Object();
     virtual ~Object();
     
-    void applyComponent(Component *component);
+    void applyComponent(Component *component, Bool suspend = false);
     void detachComponent(Component *component);
 };
 

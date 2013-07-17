@@ -17,16 +17,24 @@
 
 class Node: public Object, public Movable, public Scalable, public Rotatable, public Hideable {
 private:
-    Bool _active;
+    Bool _alive;
     
     Int _tag;
     Int _z;
     
     Node *_parent;
     NodePool _children;
+    
+    NodePool _childrenToAdd;
+    NodePool _childrenToRemove;
 private:
     void reorderChildren();
     Bool isChild(Node *child);
+    
+    void maybeAddChildren();
+    void maybeRemoveChildren();
+    
+    Bool isAlive();
 protected:
     void applyTransform();
 public:
@@ -45,11 +53,9 @@ public:
     
     Bool addChild(Node *child);
 
-    Bool removeChild(Node *child, Bool kill = true);
-    
-    Bool removeFromParent(Bool die = true);
-    
-    void removeAllChildren(Bool killAll = true);
+    Bool removeChild(Node *child);
+    Bool removeFromParent();
+    void removeAllChildren();
     //
     void setZ(Int z);
     Int getZ();    

@@ -16,14 +16,13 @@
 
 Component::Component() {
     _target = nullptr;
+    _aboutToDie = false;
     
-    printf("+ Component created\n");
+    //printf("+ Component created\n");
 }
 
 Component::~Component() {
-    //
-    
-    printf("- Component destroyed\n");
+    //printf("- Component destroyed\n");
 }
 
 void Component::attachToTarget(Object *target, Bool suspend) {
@@ -50,7 +49,9 @@ void Component::run() {
 
 void Component::stop() {
     _running = false;
-    detachFromTarget();
+    _aboutToDie = true;
+
+    //detachFromTarget();
 }
 
 void Component::pause() {
@@ -60,19 +61,32 @@ void Component::pause() {
 void Component::update(Float dt) {
     if(_running) {
         tick(dt);
-    }
+    }    
 }
 
 void Component::done() {
-    //_running = false;
-    //detachFromTarget();
     stop();
+}
+
+Bool Component::isRunning() {
+    return _running;
+}
+
+Bool Component::isAboutToDie() {
+    return _aboutToDie;
 }
 
 // delay
 
 Delay::Delay(Float time): Component() {
     _time = time;
+    _currentTime = 0.0;
+    
+    //printf("+ Delay created\n");
+}
+
+Delay::~Delay() {
+    //printf("- Delay destroyed\n");
 }
 
 Component * Delay::runWithTime(Float time) {
@@ -95,6 +109,12 @@ void Delay::tick(Float dt) {
 
 MoveTo::MoveTo(const Vector2 &pos, Float time): Delay(time) {
     _endPos = pos;
+    
+    //printf("+ MoveTo created\n");
+}
+
+MoveTo::~MoveTo() {
+    //printf("- MoveTo destroyed\n");
 }
 
 Component * MoveTo::runWithPositionAndDuration(const Vector2 &pos, Float time) {
@@ -132,7 +152,11 @@ void MoveTo::tick(Float dt) {
 // move by
 
 MoveBy::MoveBy(const Vector2 &pos, Float time): MoveTo(pos, time) {
-    //
+    //printf("+ MoveBy created\n");
+}
+
+MoveBy::~MoveBy() {
+    //printf("- MoveBy destroyed\n");
 }
 
 Component * MoveBy::runWithPositionDeltaAndDuration(const Vector2 &pos, Float time) {
@@ -150,6 +174,12 @@ void MoveBy::setUp() {
 
 ScaleTo::ScaleTo(Float scaleX, Float scaleY, Float time): Delay(time) {
     _endScale = Vector2{scaleX, scaleY};
+    
+    //printf("+ ScaleTo created\n");
+}
+
+ScaleTo::~ScaleTo() {
+    //printf("- ScaleTo destroyed\n");
 }
 
 Component * ScaleTo::runWithScale(Float scale, Float time) {
@@ -181,6 +211,8 @@ void ScaleTo::tick(Float dt) {
     
     Float percentage = _currentTime / _time;
     
+    //printf("scale time %f:, detla: %f\n", _currentTime, dt);
+    
     Vector2 scale{_startScale.x + _delta.x * percentage, _startScale.y + _delta.y * percentage};
     
     Scalable *t = dynamic_cast<Scalable *>(_target);
@@ -197,6 +229,12 @@ void ScaleTo::tick(Float dt) {
 
 FadeTo::FadeTo(UChar alpha, Float time): Delay(time) {
     _endAlpha = alpha;
+    
+    //printf("+ FadeTo created\n");
+}
+
+FadeTo::~FadeTo() {
+    //printf("- FadeTo destroyed\n");
 }
 
 Component * FadeTo::runWithAlpha(UChar alpha, Float time) {
@@ -231,5 +269,43 @@ void FadeTo::tick(Float dt) {
     
     if(finished) {
         done();
+    }
+}
+
+// componentSequence
+
+ComponentSequence::~ComponentSequence() {
+    //printf("- ComponentSequence destroyed\n");
+}
+
+ComponentSequence::ComponentSequence(const ComponentPool &components): Component() {
+    _components = components;
+
+    _current = nullptr;
+    
+    //printf("+ ComponentSequence created\n");
+}
+
+Component * ComponentSequence::runWithComponents(const ComponentPool &components) {
+    return new ComponentSequence(components);
+}
+
+void ComponentSequence::setUp() {
+}
+
+void ComponentSequence::tick(Float dt) {
+    if(_components.empty()) {
+        done();
+    } else {
+        if(_current == nullptr) {
+            _current = _components[0];
+            _target->applyComponent(_current);
+        }
+        
+        if(_current->isAboutToDie()) {
+            _current = nullptr;
+            
+            _components.erase(_components.begin());
+        }
     }
 }

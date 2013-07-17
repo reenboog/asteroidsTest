@@ -9,7 +9,7 @@
 #include "Node.h"
 
 Node::Node(): Movable(), Scalable(), Rotatable(), Hideable() {
-    _active = true;
+    _alive = true;
     
     _tag = 0;
     _z = 0;
@@ -68,6 +68,9 @@ void Node::render() {
 }
 
 void Node::loop(Float dt) {
+    maybeRemoveChildren();
+    maybeAddChildren();
+    
     for(Node *node: _children) {
         node->loop(dt);
     }
@@ -107,53 +110,66 @@ void Node::setParent(Node *newParent) {
     _parent = newParent;
 }
 
-Bool Node::addChild(Node *child) {
+void Node::maybeAddChildren() {
+    if(!_childrenToAdd.empty()) {
+        
+        for(Node *child: _childrenToAdd) {
+            _children.push_back(child);
+            child->setParent(this);
+        }
     
+        reorderChildren();
+        
+        _childrenToAdd.clear();
+    }
+}
+
+Bool Node::addChild(Node *child) {
     if(isChild(child)) {
         return false;
     }
     
-    _children.push_back(child);
-    child->setParent(this);
+    _childrenToAdd.push_back(child);
     
-    reorderChildren();
-        
     return true;
 }
 
-Bool Node::removeChild(Node *child, Bool kill) {
+void Node::maybeRemoveChildren() {
+    if(!_childrenToRemove.empty()) {
+        for(Node *child: _childrenToRemove) {
+            _children.erase(remove(_children.begin(), _children.end(), child));
+            delete child;
+        }
+        
+        _childrenToRemove.clear();
+    }
+}
+
+Bool Node::removeChild(Node *child) {
     if(!isChild(child)) {
         return false;
     }
     
     child->setParent(nullptr);
     
-    auto it = find(_children.begin(), _children.end(), child);
+    _childrenToRemove.push_back(child);
     
-    _children.erase(it);
-    
-    if(kill) {
-        delete child;
-    }
-
     return true;
 }
 
-void Node::removeAllChildren(bool killAll) {
+void Node::removeAllChildren() {
     for(Node *child: _children) {
         child->setParent(nullptr);
-
-        if(killAll) {
-            delete child;
-        }
     }
     
-    _children.clear();
+    for(Node *child: _children) {
+        _childrenToRemove.push_back(child);
+    }
 }
 
-Bool Node::removeFromParent(Bool die) {
+Bool Node::removeFromParent() {
     if(_parent) {
-        return _parent->removeChild(this, die);
+        return _parent->removeChild(this);
     } else {
         return false;
     }
