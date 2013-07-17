@@ -39,18 +39,26 @@ Bool Scene::init() {
     _back = new Sprite("back.png");
     _back->setPos({400, 400});
     _back->setRotation(30);
-    _back->setAlpha(20);
+    _back->setAlpha(255);
+    _back->setRotation(-40);
 
-    _back->applyComponent(ComponentSequence::runWithComponents(
-                                                               {   MoveBy::runWithPositionDeltaAndDuration({100, 100}, 2.2),
-                                                                   FadeTo::runWithAlpha(100, 3),
-                                                                   ScaleTo::runWithScale(0.2, 1),
-                                                                   FadeTo::runWithAlpha(30, 0.5),
-                                                                   FadeTo::runWithAlpha(200, 0.5),
-                                                                   ScaleTo::runWithScaleXY(0.5, 2.0, 2),
-                                                                   Delay::runWithTime(2),
-                                                                   MoveTo::runWithPositionAndDuration({0, 0}, 0.5)
-                                                               }));
+//    _back->applyComponent(ComponentSequence::runWithComponents(
+//                                                               {   MoveBy::runWithPositionDeltaAndDuration({100, 100}, 2.2),
+//                                                                   FadeTo::runWithAlpha(100, 3),
+//                                                                   ScaleTo::runWithScale(0.2, 1),
+//                                                                   FadeTo::runWithAlpha(30, 0.5),
+//                                                                   FadeTo::runWithAlpha(200, 0.5),
+//                                                                   ScaleTo::runWithScaleXY(0.5, 2.0, 2),
+//                                                                   Delay::runWithTime(2),
+//                                                                   MoveTo::runWithPositionAndDuration({0, 0}, 0.5)
+//                                                               }));
+    
+    _back->applyComponent(ComponentGroup::runWithComponents({
+                                                            RotateTo::runWithRotation(40, 1),
+                                                            MoveTo::runWithPosition({10, 10}, 1),
+                                                            FadeTo::runWithAlpha(20, 1),
+                                                            ScaleTo::runWithScale(0.3, 1)
+                                                            }));
 
     //_back->setHidden(true);
     this->addChild(_back);

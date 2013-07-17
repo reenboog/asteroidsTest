@@ -76,7 +76,7 @@ protected:
     MoveTo(const Vector2 &pos, Float time);
     virtual ~MoveTo();
 public:
-    static Component * runWithPositionAndDuration(const Vector2 &pos, Float time);
+    static Component * runWithPosition(const Vector2 &pos, Float time);
 private:
     //do not allow instantiating with this method directly
     static Component * runWithTime(Float time) {return nullptr;};
@@ -86,12 +86,46 @@ class MoveBy: public MoveTo {
 protected:
     MoveBy(const Vector2 &pos, Float time);
     virtual ~MoveBy();
-public:
+
     void setUp();
 
-    static Component * runWithPositionDeltaAndDuration(const Vector2 &pos, Float time);
+    static Component * runWithPositionDelta(const Vector2 &pos, Float time);
 private:
-    static Component * runWithPositionAndDuration(const Vector2 &pos, Float time) {return nullptr;};
+    static Component * runWithPosition(const Vector2 &pos, Float time) {return nullptr;};
+};
+
+// rotateTo
+
+class RotateTo: public Delay {
+protected:
+    Float _endRotation;
+    Float _startRotation;
+    Float _delta;
+protected:
+    void tick(Float dt);
+    void setUp();
+    
+    RotateTo(Float angle, Float time);
+    virtual ~RotateTo();
+public:
+    static Component * runWithRotation(Float angle, Float time);
+private:
+    //do not allow instantiating with this method directly
+    static Component * runWithTime(Float time) {return nullptr;};
+};
+
+// rotateBy
+
+class RotateBy: public RotateTo {
+protected:
+    RotateBy(Float angle, Float time);
+    virtual ~RotateBy();
+    
+    void setUp();
+public:
+    static Component * runWithRotationDelta(Float angle, Float time);
+private:
+    static Component * runWithRotation(Float angle, Float time) {return nullptr;};
 };
 
 // scaleTo
@@ -148,6 +182,21 @@ protected:
     void tick(Float dt);
     void setUp();
     
+public:
+    static Component * runWithComponents(const ComponentPool &components);
+};
+
+// spawn
+
+class ComponentGroup: public Component {
+private:
+    ComponentPool _components;
+protected:
+    ComponentGroup(const ComponentPool &components);
+    ~ComponentGroup();
+    
+    void tick(Float dt);
+    void setUp();
 public:
     static Component * runWithComponents(const ComponentPool &components);
 };

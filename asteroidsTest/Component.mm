@@ -117,7 +117,7 @@ MoveTo::~MoveTo() {
     //printf("- MoveTo destroyed\n");
 }
 
-Component * MoveTo::runWithPositionAndDuration(const Vector2 &pos, Float time) {
+Component * MoveTo::runWithPosition(const Vector2 &pos, Float time) {
     return new MoveTo(pos, time);
 }
 
@@ -159,7 +159,7 @@ MoveBy::~MoveBy() {
     //printf("- MoveBy destroyed\n");
 }
 
-Component * MoveBy::runWithPositionDeltaAndDuration(const Vector2 &pos, Float time) {
+Component * MoveBy::runWithPositionDelta(const Vector2 &pos, Float time) {
     return new MoveBy(pos, time);
 }
 
@@ -168,6 +168,62 @@ void MoveBy::setUp() {
     _startPos = dynamic_cast<Movable *>(_target)->getPos();
     _endPos = _startPos + _endPos;
     _delta = _endPos - _startPos;
+}
+
+// rotateTo
+
+RotateTo::~RotateTo() {
+}
+
+RotateTo::RotateTo(Float angle, Float time): Delay(time) {
+    _endRotation = angle;
+}
+
+Component * RotateTo::runWithRotation(Float angle, Float time) {
+    return new RotateTo(angle, time);
+}
+
+void RotateTo::setUp() {
+    _startRotation = dynamic_cast<Rotatable *>(_target)->getRotation();
+    _delta = _endRotation - _startRotation;
+}
+
+void RotateTo::tick(Float dt) {
+    Bool finished = false;
+    
+    _currentTime += dt;
+    
+    if(_currentTime >= _time) {
+        _currentTime = _time;
+        finished = true;
+    }
+    
+    Float percentage = _currentTime / _time;
+    Float r = _startRotation + _delta * percentage;
+    
+    dynamic_cast<Rotatable *>(_target)->setRotation(r);
+    
+    if(finished) {
+        done();
+    }
+}
+
+// rotateBy
+
+RotateBy::~RotateBy() {
+}
+
+RotateBy::RotateBy(Float angle, Float time): RotateTo(angle, time) {
+}
+
+Component * RotateBy::runWithRotationDelta(Float angle, Float time) {
+    return new RotateBy(angle, time);
+}
+
+void RotateBy::setUp() {
+    _startRotation = dynamic_cast<Rotatable *>(_target)->getRotation();
+    _endRotation = _startRotation + _endRotation;
+    _delta = _endRotation - _startRotation;
 }
 
 // scaleTo
@@ -308,4 +364,29 @@ void ComponentSequence::tick(Float dt) {
             _components.erase(_components.begin());
         }
     }
+}
+
+// spawn
+
+ComponentGroup::~ComponentGroup() {
+}
+
+ComponentGroup::ComponentGroup(const ComponentPool &components): Component() {
+    _components = components;
+}
+
+Component * ComponentGroup::runWithComponents(const ComponentPool &components) {
+    return new ComponentGroup(components);
+}
+
+void ComponentGroup::setUp() {
+    //
+}
+
+void ComponentGroup::tick(Float dt) {
+    for(Component *component: _components) {
+        _target->applyComponent(component);
+    }
+    
+    done();
 }
