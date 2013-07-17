@@ -20,6 +20,7 @@ using namespace std;
 
 typedef char Char;
 typedef unsigned char UChar;
+typedef short Short;
 typedef unsigned int UInt;
 typedef int Int;
 typedef bool Bool;

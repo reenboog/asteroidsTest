@@ -40,7 +40,10 @@ Bool Scene::init() {
     _back->setPos({400, 400});
     _back->setRotation(30);
     
-    _back->applyComponent(MoveBy::runWithPositionDeltaAndDuration({300, 300}, 5));
+    _back->applyComponent(MoveTo::runWithPositionAndDuration({300, 300}, 5));
+    _back->applyComponent(ScaleTo::runWithScale(3, 12));
+    //_back->applyComponent(FadeTo::runWithAlpha(100, 2));
+
     //_back->setHidden(true);
     this->addChild(_back);
     
@@ -112,9 +115,10 @@ Bool Scene::update(Float dt) {
     sec1 += dt;
 
     
-    if(sec > 2) {
+    if(sec > 5) {
         sec = 0;
-        SoundManager::mngr()->playEffect("shoot0");
+        //SoundManager::mngr()->playEffect("shoot0");
+        _back->applyComponent(FadeTo::runWithAlpha(100, 2));
     }
     
 //    if(sec1 > 3) {

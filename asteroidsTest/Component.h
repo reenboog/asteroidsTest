@@ -84,4 +84,43 @@ private:
     static Component * runWithPositionAndDuration(const Vector2 &pos, Float time) {return nullptr;};
 };
 
+// scaleTo
+
+class ScaleTo: public Delay {
+protected:
+    Vector2 _endScale;
+    Vector2 _startScale;
+    Vector2 _delta;
+protected:
+    void tick(Float dt);
+    void setUp();
+    
+    ScaleTo(Float scaleX, Float scaleY, Float time);
+public:
+    static Component *runWithScale(Float scale, Float time);
+    static Component *runWithScaleXY(Float scaleX, Float scaleY, Float time);
+private:
+    //do not allow instantiating with this method directly
+    static Component * runWithTime(Float time) {return nullptr;};
+};
+
+// fadeTo
+
+class FadeTo: public Delay {
+protected:
+    UChar _endAlpha;
+    UChar _startAlpha;
+    Short _delta;
+protected:
+    void tick(Float dt);
+    void setUp();
+    
+    FadeTo(UChar alpha, Float time);
+public:
+    static Component * runWithAlpha(UChar alpha, Float time);
+private:
+    //do not allow instantiating with this method directly
+    static Component * runWithTime(Float time) {return nullptr;};
+};
+
 #endif /* defined(__asteroidsTest__Component__) */

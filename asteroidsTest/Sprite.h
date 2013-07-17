@@ -17,15 +17,13 @@
 // |   |
 // 4---1
 
-class Sprite: public Node {
+class Sprite: public Node, public Blendable {
 protected:
     string _file;
     
     Texture _texture;
     
     Quad _quad;
-    
-    Color4B _color;
 
     Size2 _size;
     
@@ -52,11 +50,11 @@ public:
     //  ---2
     void setUV(Float u0, Float v0, Float u1, Float v1);
     
+    void setColor(const Color4B &color);
+    void setAlpha(UChar alpha);
+    
     Vector2 getAnchorPoint();
     void setAnchorPoint(Vector2 anchor);
-    
-    void setColor(const Color4B &color);
-    Color4B getColor();
     
     Size2 getSize();
 };

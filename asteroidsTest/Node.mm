@@ -8,13 +8,8 @@
 
 #include "Node.h"
 
-Node::Node() {
-    _pos = {0, 0};
-    _scaleX = _scaleY = 1.0;
-    _rotation = 0;
-    
+Node::Node(): Movable(), Scalable(), Rotatable(), Hideable() {
     _active = true;
-    _hidden = false;
     
     _tag = 0;
     _z = 0;
@@ -174,56 +169,4 @@ void Node::setZ(Int z) {
 
 Int Node::getZ() {
     return _z;
-}
-
-Bool Node::isHidden() {
-    return _hidden;
-}
-
-void Node::setHidden(Bool hidden) {
-    _hidden = hidden;
-}
-
-void Node::setPos(Vector2 pos) {
-    _pos = pos;
-}
-
-Vector2 Node::getPos() {
-    return _pos;
-}
-
-void Node::setScaleX(Float scale) {
-    _scaleX = scale;
-}
-
-Float Node::getScaleX() {
-    return _scaleX;
-}
-
-void Node::setScaleY(Float scale) {
-    _scaleY = scale;
-}
-
-Float Node::getScaleY() {
-    return _scaleY;
-}
-
-void Node::setScale(Float scale) {
-    _scaleX = _scaleY = scale;
-}
-
-Float Node::getScale() {
-    if(_scaleX != _scaleY) {
-        printf("!Trying to get scale but scaleX != scaleY");
-    }
-    
-    return _scaleX;
-}
-
-void Node::setRotation(Float rotation) {
-    _rotation = rotation;
-}
-
-Float Node::getRotation() {
-    return _rotation;
 }

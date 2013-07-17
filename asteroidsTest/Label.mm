@@ -65,31 +65,6 @@ void Label::setString(const string &str) {
     
     updateQuad();
     setUV(0, 0, _tex.maxS, _tex.maxT);
-    
-//    _uvCoords[0] = {1, 1};
-//    _uvCoords[1] = {1, 0};
-//    _uvCoords[2] = {0, 0};
-//    _uvCoords[3] = {0, 1};
-    
-//    glBindTexture(GL_TEXTURE_2D, [_tex name]);
-//    
-//    // Enable modes needed for drawing
-//    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-//    glEnableClientState(GL_VERTEX_ARRAY);
-//    glEnable(GL_TEXTURE_2D);
-//    glEnable(GL_BLEND);
-//    
-//    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-//    //
-//    
-//    [_tex drawInRect: CGRectMake(0, -1, 1, 1)];
-//    
-//    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-//    glDisableClientState(GL_VERTEX_ARRAY);
-//    glDisable(GL_TEXTURE_2D);
-//    glDisable(GL_BLEND);
-    
-    //[_tex release];
 }
 
 string Label::getString() {

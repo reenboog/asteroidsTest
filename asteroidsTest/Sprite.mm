@@ -19,7 +19,7 @@ Sprite::~Sprite() {
     printf("-sprite %s destroyed. \n", _file.c_str());
 }
 
-Sprite::Sprite(): Node() {
+Sprite::Sprite(): Node(), Blendable() {
 }
 
 Sprite::Sprite(string file): Sprite() {
@@ -32,7 +32,6 @@ Sprite::Sprite(string file, Int x, Int y, Int w, Int h): Sprite() {
 }
 
 void Sprite::loadTexture(string file, Float x, Float y, Float width, Float height) {
-    
     _anchorPoint = v2(0.5, 0.5);
     
     _file = file;
@@ -45,12 +44,7 @@ void Sprite::loadTexture(string file, Float x, Float y, Float width, Float heigh
     _size.w = (width == -1 ? tWidth : width);
     _size.h = (height == -1 ? tHeight : height);
     
-    Color4B tmpColor = {255, 255, 255, 255};
-    
-    _quad.bl.color = tmpColor;
-    _quad.br.color = tmpColor;
-    _quad.tl.color = tmpColor;
-    _quad.tr.color = tmpColor;
+    setColor(_color);
     
     //apply tex coords
     _quad.br.uv = {(x + _size.w) / tWidth, (y + _size.h) / tHeight};
@@ -130,7 +124,7 @@ void Sprite::setAnchorPoint(Vector2 anchor) {
 }
 
 void Sprite::setColor(const Color4B &color) {
-    _color = color;
+    Blendable::setColor(color);
     
     _quad.bl.color = _color;
     _quad.br.color = _color;
@@ -138,6 +132,8 @@ void Sprite::setColor(const Color4B &color) {
     _quad.tr.color = _color;
 }
 
-Color4B Sprite::getColor() {
-    return _color;
+void Sprite::setAlpha(UChar alpha) {
+    Blendable::setAlpha(alpha);
+    
+    setColor(_color);
 }

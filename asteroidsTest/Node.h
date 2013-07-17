@@ -15,14 +15,9 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-class Node: public Object, public Movable {
+class Node: public Object, public Movable, public Scalable, public Rotatable, public Hideable {
 private:
-    Float _scaleX;
-    Float _scaleY;
-    Float _rotation;
-    
     Bool _active;
-    Bool _hidden;
     
     Int _tag;
     Int _z;
@@ -57,25 +52,7 @@ public:
     void removeAllChildren(Bool killAll = true);
     //
     void setZ(Int z);
-    Int getZ();
-    
-    Bool isHidden();
-    void setHidden(Bool hidden);
-    
-    void setPos(Vector2 pos);
-    Vector2 getPos();
-    
-    void setScaleX(Float scale);
-    Float getScaleX();
-    
-    void setScaleY(Float scale);
-    Float getScaleY();
-    
-    void setScale(Float scale);
-    Float getScale();
-    
-    void setRotation(Float rotation);
-    Float getRotation();
+    Int getZ();    
 };
 
 #endif /* defined(__kingTest__Node__) */

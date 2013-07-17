@@ -29,16 +29,83 @@ public:
 };
 
 // interfaces
+// movable
 
 class Movable /*: public virtual Object */ {
 protected:
     Vector2 _pos;
 public:
-    virtual void setPos(Vector2 pos) = 0;
-    virtual Vector2 getPos() = 0;
+    void setPos(Vector2 pos);
+    Vector2 getPos();
+    
+    Movable();
+    virtual ~Movable();
+};
+
+// scalable
+
+class Scalable {
+protected:
+    Float _scaleX;
+    Float _scaleY;
+public:
+    Scalable();
+    virtual ~Scalable();
+    
+    virtual void setScaleX(Float scale);
+    Float getScaleX();
+    
+    void setScaleY(Float scale);
+    Float getScaleY();
+    
+    void setScale(Float scale);
+    Float getScale();
+};
+
+// rotatable
+
+class Rotatable {
+protected:
+    Float _rotation;
+public:
+    Rotatable();
+    virtual ~Rotatable();
+    
+    void setRotation(Float rotation);
+    Float getRotation();
+};
+
+// hideable
+
+class Hideable {
+protected:
+    Bool _hidden;
+public:
+    Hideable();
+    virtual ~Hideable();
+    
+    Bool isHidden();
+    void setHidden(Bool hidden);
+};
+
+// blendable
+
+class Blendable {
+protected:
+    Color4B _color;
+    UChar _alpha;
+    
+public:
+    Blendable();
+    virtual ~Blendable();
+    
+    virtual void setColor(const Color4B &color);
+    Color4B getColor();
+    
+    UChar getAlpha();
+    virtual void setAlpha(UChar alpha);
 };
 
 //
-
 
 #endif /* defined(__asteroidsTest__Object__) */

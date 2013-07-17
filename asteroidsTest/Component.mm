@@ -145,3 +145,91 @@ void MoveBy::setUp() {
     _endPos = _startPos + _endPos;
     _delta = _endPos - _startPos;
 }
+
+// scaleTo
+
+ScaleTo::ScaleTo(Float scaleX, Float scaleY, Float time): Delay(time) {
+    _endScale = Vector2{scaleX, scaleY};
+}
+
+Component * ScaleTo::runWithScale(Float scale, Float time) {
+    return ScaleTo::runWithScaleXY(scale, scale, time);
+}
+
+Component * ScaleTo::runWithScaleXY(Float scaleX, Float scaleY, Float time) {
+    return new ScaleTo(scaleX, scaleY, time);
+}
+
+void ScaleTo::setUp() {
+    // using dynamic_cast is not the best idea
+    // but it's better than virtual inheritance in our case
+    Scalable *t = dynamic_cast<Scalable *>(_target);
+
+    _startScale = Vector2{t->getScaleX(), t->getScaleY()};
+    _delta = _endScale - _startScale;
+}
+
+void ScaleTo::tick(Float dt) {
+    Bool finished = false;
+    
+    _currentTime += dt;
+    
+    if(_currentTime >= _time) {
+        _currentTime = _time;
+        finished = true;
+    }
+    
+    Float percentage = _currentTime / _time;
+    
+    Vector2 scale{_startScale.x + _delta.x * percentage, _startScale.y + _delta.y * percentage};
+    
+    Scalable *t = dynamic_cast<Scalable *>(_target);
+    
+    t->setScaleX(scale.x);
+    t->setScaleY(scale.y);
+    
+    if(finished) {
+        done();
+    }
+}
+
+// fadeTo
+
+FadeTo::FadeTo(UChar alpha, Float time): Delay(time) {
+    _endAlpha = alpha;
+}
+
+Component * FadeTo::runWithAlpha(UChar alpha, Float time) {
+    return new FadeTo(alpha, time);
+}
+
+void FadeTo::setUp() {
+    Blendable *t = dynamic_cast<Blendable *>(_target);
+    
+    _startAlpha = t->getAlpha();
+    _delta = _endAlpha - _startAlpha;
+}
+
+void FadeTo::tick(Float dt) {
+    Bool finished = false;
+    
+    _currentTime += dt;
+    
+    if(_currentTime >= _time) {
+        _currentTime = _time;
+        finished = true;
+    }
+    
+    Float percentage = _currentTime / _time;
+    
+    UChar alpha = _startAlpha + _delta * percentage;
+    
+    //printf("alpha = %i\n", (int) alpha);
+    
+    Blendable *t = dynamic_cast<Blendable *>(_target);
+    t->setAlpha(alpha);
+    
+    if(finished) {
+        done();
+    }
+}
