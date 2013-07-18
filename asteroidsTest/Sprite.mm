@@ -44,6 +44,7 @@ void Sprite::loadTexture(string file, Float x, Float y, Float width, Float heigh
     _size.w = (width == -1 ? tWidth : width);
     _size.h = (height == -1 ? tHeight : height);
     
+    setContentSize(_size);
     setColor(_color);
     
     //apply tex coords
@@ -101,6 +102,21 @@ void Sprite::setUV(Float u0, Float v0, Float u1, Float v1) {
     _quad.tr.uv.u = u1; _quad.tr.uv.v = v0;
     _quad.tl.uv.u = u0; _quad.tl.uv.v = v0;
     _quad.bl.uv.u = u0; _quad.bl.uv.v = v1;
+}
+
+Bool Sprite::pointInArea(const Vector2 &pt) {
+    Vector2 anchorCorrection = v2(_anchorPoint.x * _size.w, _anchorPoint.y * _size.h);
+
+    Size2 size = getContentSize();
+    Vector2 pos = _pos;
+    
+    pos -= anchorCorrection;
+
+    if((pos.x <= pt.x && pos.y < pt.y) && (pt.x <= pos.x + size.w && pt.y <= pos.y + size.h)) {
+        return true;
+    }
+    
+    return false;
 }
 
 void Sprite::updateQuad() {

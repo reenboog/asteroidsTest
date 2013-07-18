@@ -32,6 +32,15 @@ Float Mesh::getLineWidth() {
     return  _lineWidth;
 }
 
+void Mesh::setContentRadius(Float radius) {
+    _contentRadius = radius;
+}
+
+Bool Mesh::pointInArea(const Vector2 &pt) {
+    Vector2 distance = {_pos.x - pt.x, _pos.y - pt.y};
+    return _contentRadius >= distance.length();
+}
+
 Bool Mesh::setVertex(UInt index, const VertexPosColor &vertex, Bool skipColor) {
     
     // allow changing current vertices and pushing right back the new one

@@ -34,6 +34,10 @@ class Vector2 {
 public:
     Float x, y;
     
+    Float length() {
+        return sqrtf(x * x + y * y);
+    }
+    
     Bool operator == (const Vector2 &r) {
         return x == r.x && y == r.y;
     }

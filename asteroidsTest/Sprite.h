@@ -50,6 +50,8 @@ public:
     //  ---2
     void setUV(Float u0, Float v0, Float u1, Float v1);
     
+    Bool pointInArea(const Vector2 &pt);
+    
     void setColor(const Color4B &color);
     void setAlpha(UChar alpha);
     

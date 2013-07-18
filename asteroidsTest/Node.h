@@ -22,6 +22,8 @@ private:
     Int _tag;
     Int _z;
     
+    Size2 _contentSize;
+    
     Node *_parent;
     NodePool _children;
     
@@ -50,6 +52,10 @@ public:
     //
     Node* getParent();
     void setParent(Node *parent);
+    
+    void setContentSize(const Size2 &size);
+    Size2 getContentSize();
+    virtual Bool pointInArea(const Vector2 &pt);
     
     Bool addChild(Node *child);
 

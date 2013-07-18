@@ -37,17 +37,17 @@ Bool Scene::init() {
     Bool isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
     
     _back = new Sprite("back.png");
-    _back->setPos({400, 400});
-    _back->setRotation(30);
+    _back->setPos({0, 0});
+    _back->setAnchorPoint({0, 0});
+    //_back->setRotation(30);
     _back->setAlpha(255);
-    _back->setRotation(-40);
 
-    _back->applyComponent(ComponentGroup::runWithComponents({
-                                                            RotateTo::runWithRotation(40, 1),
-                                                            MoveTo::runWithPosition({10, 10}, 1),
-                                                            FadeTo::runWithAlpha(20, 1),
-                                                            ScaleTo::runWithScale(0.3, 1)
-                                                            }));
+//    _back->applyComponent(ComponentGroup::runWithComponents({
+//                                                            RotateTo::runWithRotation(40, 1),
+//                                                            MoveTo::runWithPosition({10, 10}, 1),
+//                                                            FadeTo::runWithAlpha(20, 1),
+//                                                            ScaleTo::runWithScale(0.3, 1)
+//                                                            }));
     this->addChild(_back);
     
     Mesh *m = new Mesh();

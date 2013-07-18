@@ -100,6 +100,22 @@ void Node::applyTransform() {
     glScalef(_scaleX, _scaleY, 1.0);
 }
 
+void Node::setContentSize(const Size2 &size) {
+    _contentSize = size;
+}
+
+Size2 Node::getContentSize() {
+    return _contentSize;
+}
+
+Bool Node::pointInArea(const Vector2 &pt) {
+    if((_pos.x <= pt.x && _pos.y < pt.y) && (pt.x <= _pos.x + _contentSize.w && pt.y <= _pos.y + _contentSize.h)) {
+        return true;
+    }
+    
+    return false;
+}
+
 Node* Node::getParent() {
     return _parent;
 }
