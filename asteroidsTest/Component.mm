@@ -65,7 +65,7 @@ void Component::update(Float dt) {
 }
 
 void Component::done() {
-    stop();
+    Component::stop();
 }
 
 Bool Component::isRunning() {

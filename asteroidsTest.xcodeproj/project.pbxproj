@@ -13,7 +13,6 @@
 		B842E2101792E525009AA90A /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = B842E20E1792E525009AA90A /* Scene.mm */; };
 		B85B83D217956408004A4036 /* Object.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85B83D017956408004A4036 /* Object.mm */; };
 		B85B83D517956470004A4036 /* Component.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85B83D317956470004A4036 /* Component.mm */; };
-		B85C7F261798565300988F4A /* Inert.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85C7F241798565300988F4A /* Inert.mm */; };
 		B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8CE55551794F0D100E980D9 /* SoundManager.mm */; };
 		B8CE55591794F33200E980D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE55581794F33200E980D9 /* OpenAL.framework */; };
 		B8CE555B1794F8F700E980D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE555A1794F8F700E980D9 /* AudioToolbox.framework */; };
@@ -54,7 +53,6 @@
 		B85B83D117956408004A4036 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
 		B85B83D317956470004A4036 /* Component.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Component.mm; sourceTree = "<group>"; };
 		B85B83D417956470004A4036 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
-		B85C7F241798565300988F4A /* Inert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Inert.mm; sourceTree = "<group>"; };
 		B85C7F251798565300988F4A /* Inert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Inert.h; sourceTree = "<group>"; };
 		B8CE55551794F0D100E980D9 /* SoundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundManager.mm; sourceTree = "<group>"; };
 		B8CE55561794F0D100E980D9 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				B85B83D117956408004A4036 /* Object.h */,
 				B85B83D317956470004A4036 /* Component.mm */,
 				B85B83D417956470004A4036 /* Component.h */,
-				B85C7F241798565300988F4A /* Inert.mm */,
 				B85C7F251798565300988F4A /* Inert.h */,
 			);
 			name = components;
@@ -329,7 +326,6 @@
 				B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */,
 				B85B83D217956408004A4036 /* Object.mm in Sources */,
 				B85B83D517956470004A4036 /* Component.mm in Sources */,
-				B85C7F261798565300988F4A /* Inert.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

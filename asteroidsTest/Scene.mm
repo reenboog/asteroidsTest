@@ -16,6 +16,7 @@
 #import "SoundManager.h"
 
 #import "Inert.h"
+#import "BoundToArea.h"
 
 #import <iostream>
 #import <sstream>
@@ -31,6 +32,8 @@ Scene::Scene(): Node() {
 Scene::~Scene() {
     //cleanup();
 }
+
+Component *ccc = nullptr;
 
 Bool Scene::init() {
     
@@ -54,7 +57,7 @@ Bool Scene::init() {
     
     Mesh *m = new Mesh();
     
-    m->setPos({300, 200});
+    m->setPos({10, 10});
     m->setRotation(5);
     m->setLineWidth(5);
     m->setVertex(0, {{-100, -100, 0}, {200, 200, 200, 255}});
@@ -69,8 +72,13 @@ Bool Scene::init() {
             printf("running");
         }),
         Delay::runWithTime(3),
-        Inert::runWithVelocity({100, 100})
+        ComponentGroup::runWithComponents({
+            ccc = Inert::runWithVelocity({100, 100}),
+            BoundToArea::runWithArea({-50, -50}, {200, 200})
+        })
     }));
+    
+    auto vv = ccc;
     
     Int fontSize = isIpad ? 40 : 15;
     
@@ -128,6 +136,16 @@ Bool Scene::update(Float dt) {
     }
         
     Node::update(dt);
+    
+    static float t = 0;
+    t+=dt;
+    if(t >10) {
+        t = -99999;
+        if(ccc) {
+            ccc->stop();
+            ccc = nullptr;
+        }
+    }
     
     //_back->setPos({_back->getPos().x + dt * 30, _back->getPos().y});
     

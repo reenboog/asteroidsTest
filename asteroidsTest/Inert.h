@@ -10,11 +10,10 @@
 #define __asteroidsTest__Inert__
 
 #include "Component.h"
+#include "Object.h"
 
-class Inert: public Component {
+class Inert: public Component, public InstanceCollector<Inert> {
 private:
-    typedef vector<Inert *> InertPool;
-    static InertPool __inerts;
 protected:
     Vector2 _velocity;
 protected:
@@ -26,5 +25,28 @@ public:
     
     static Component * runWithVelocity(const Vector2 &v);
 };
+
+Inert::~Inert(){
+}
+
+Inert::Inert(const Vector2 &v): Component(), InstanceCollector<Inert>(this) {
+    _velocity = v;
+}
+
+Component * Inert::runWithVelocity(const Vector2 &v) {
+    return new Inert(v);
+}
+
+void Inert::setUp() {
+}
+
+void Inert::tick(Float dt) {
+    Movable *t = dynamic_cast<Movable *>(_target);
+    Vector2 pos = t->getPos() + (_velocity * dt);
+    
+    t->setPos(pos);
+}
+
+template class InstanceCollector<Inert>;
 
 #endif /* defined(__asteroidsTest__Inert__) */

@@ -44,6 +44,27 @@ public:
     void pause();
 };
 
+// type-cpecified collection
+template <typename T>
+class InstanceCollector {
+protected:
+    typedef vector<T *> CollectionType;
+    static CollectionType __instances;
+protected:
+    InstanceCollector(T *c) {
+        __instances.push_back(c);
+        
+        printf("added instance!\n");
+    }
+    
+    virtual ~InstanceCollector() {
+        __instances.erase(remove(__instances.begin(), __instances.end(), this));
+        printf("removed instance!\n");
+    }
+};
+
+template <typename T> typename InstanceCollector<T>::CollectionType InstanceCollector<T>::__instances;
+
 // instantUse
 
 class InstantUse: public Component {
