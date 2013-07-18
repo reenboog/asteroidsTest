@@ -56,6 +56,10 @@ public:
         return *this;
     }
     
+    Vector2 operator *(Float s) {
+        return Vector2{x * s, y * s};
+    }
+    
     Vector2 operator -() const {
         Vector2 result = *this;
         result.x = -x;

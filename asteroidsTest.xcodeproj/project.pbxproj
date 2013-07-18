@@ -13,6 +13,7 @@
 		B842E2101792E525009AA90A /* Scene.mm in Sources */ = {isa = PBXBuildFile; fileRef = B842E20E1792E525009AA90A /* Scene.mm */; };
 		B85B83D217956408004A4036 /* Object.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85B83D017956408004A4036 /* Object.mm */; };
 		B85B83D517956470004A4036 /* Component.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85B83D317956470004A4036 /* Component.mm */; };
+		B85C7F261798565300988F4A /* Inert.mm in Sources */ = {isa = PBXBuildFile; fileRef = B85C7F241798565300988F4A /* Inert.mm */; };
 		B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B8CE55551794F0D100E980D9 /* SoundManager.mm */; };
 		B8CE55591794F33200E980D9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE55581794F33200E980D9 /* OpenAL.framework */; };
 		B8CE555B1794F8F700E980D9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8CE555A1794F8F700E980D9 /* AudioToolbox.framework */; };
@@ -53,6 +54,8 @@
 		B85B83D117956408004A4036 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
 		B85B83D317956470004A4036 /* Component.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Component.mm; sourceTree = "<group>"; };
 		B85B83D417956470004A4036 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
+		B85C7F241798565300988F4A /* Inert.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Inert.mm; sourceTree = "<group>"; };
+		B85C7F251798565300988F4A /* Inert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Inert.h; sourceTree = "<group>"; };
 		B8CE55551794F0D100E980D9 /* SoundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundManager.mm; sourceTree = "<group>"; };
 		B8CE55561794F0D100E980D9 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		B8CE55581794F33200E980D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -112,6 +115,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B85C7F271798593B00988F4A /* appStuff */ = {
+			isa = PBXGroup;
+			children = (
+				B8F2DB0A179284E400A809B8 /* AppDelegate.h */,
+				B8F2DB0B179284E400A809B8 /* AppDelegate.mm */,
+				B83DDC1417939D8300C06998 /* RootViewController.h */,
+				B83DDC1517939D8300C06998 /* RootViewController.mm */,
+				B8F2DB181792857300A809B8 /* OpenGLView.h */,
+				B8F2DB191792857300A809B8 /* OpenGLView.mm */,
+			);
+			name = appStuff;
+			sourceTree = "<group>";
+		};
+		B85C7F281798594E00988F4A /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				B8F2DB2517928C5900A809B8 /* FilesUtils.h */,
+				B8F2DB2617928C5900A809B8 /* FilesUtils.mm */,
+				B8F2DB1F179286AD00A809B8 /* Common.h */,
+				B8FD70AB179467BE00785F12 /* Common.mm */,
+				B8F2DB2A17929E7800A809B8 /* Types.h */,
+				B8F2DB2B17929E7800A809B8 /* Types.mm */,
+			);
+			name = tools;
+			sourceTree = "<group>";
+		};
+		B85C7F291798596F00988F4A /* nodes */ = {
+			isa = PBXGroup;
+			children = (
+				B8F2DB2D1792AD2600A809B8 /* Node.mm */,
+				B8F2DB2E1792AD2600A809B8 /* Node.h */,
+				B83DDC1C17942A9500C06998 /* Label.h */,
+				B83DDC1D17942A9500C06998 /* Label.mm */,
+				B8F2DB351792B69C00A809B8 /* Sprite.mm */,
+				B8F2DB361792B69D00A809B8 /* Sprite.h */,
+				B8FD70AD1794731D00785F12 /* Mesh.mm */,
+				B8FD70AE1794731D00785F12 /* Mesh.h */,
+				B842E20E1792E525009AA90A /* Scene.mm */,
+				B842E20F1792E525009AA90A /* Scene.h */,
+			);
+			name = nodes;
+			sourceTree = "<group>";
+		};
+		B85C7F2A1798597A00988F4A /* components */ = {
+			isa = PBXGroup;
+			children = (
+				B85B83D017956408004A4036 /* Object.mm */,
+				B85B83D117956408004A4036 /* Object.h */,
+				B85B83D317956470004A4036 /* Component.mm */,
+				B85B83D417956470004A4036 /* Component.h */,
+				B85C7F241798565300988F4A /* Inert.mm */,
+				B85C7F251798565300988F4A /* Inert.h */,
+			);
+			name = components;
+			sourceTree = "<group>";
+		};
+		B85C7F2B1798598A00988F4A /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				B83DDC1F17942FBD00C06998 /* Texture2d.m */,
+				B83DDC2017942FBD00C06998 /* Texture2d.h */,
+				B8CE55551794F0D100E980D9 /* SoundManager.mm */,
+				B8CE55561794F0D100E980D9 /* SoundManager.h */,
+				B8F2DB301792AF2E00A809B8 /* TextureManager.mm */,
+				B8F2DB311792AF2F00A809B8 /* TextureManager.h */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
 		B8F2DAEF179284E400A809B8 = {
 			isa = PBXGroup;
 			children = (
@@ -148,38 +220,11 @@
 			isa = PBXGroup;
 			children = (
 				B8DBE70117931189001A1CB6 /* res */,
-				B8F2DB0A179284E400A809B8 /* AppDelegate.h */,
-				B8F2DB0B179284E400A809B8 /* AppDelegate.mm */,
-				B83DDC1417939D8300C06998 /* RootViewController.h */,
-				B83DDC1517939D8300C06998 /* RootViewController.mm */,
-				B8F2DB181792857300A809B8 /* OpenGLView.h */,
-				B8F2DB191792857300A809B8 /* OpenGLView.mm */,
-				B8F2DB2517928C5900A809B8 /* FilesUtils.h */,
-				B8F2DB2617928C5900A809B8 /* FilesUtils.mm */,
-				B8F2DB1F179286AD00A809B8 /* Common.h */,
-				B8FD70AB179467BE00785F12 /* Common.mm */,
-				B8F2DB2A17929E7800A809B8 /* Types.h */,
-				B8F2DB2B17929E7800A809B8 /* Types.mm */,
-				B8F2DB2D1792AD2600A809B8 /* Node.mm */,
-				B8F2DB2E1792AD2600A809B8 /* Node.h */,
-				B85B83D017956408004A4036 /* Object.mm */,
-				B85B83D117956408004A4036 /* Object.h */,
-				B85B83D317956470004A4036 /* Component.mm */,
-				B85B83D417956470004A4036 /* Component.h */,
-				B83DDC1C17942A9500C06998 /* Label.h */,
-				B83DDC1D17942A9500C06998 /* Label.mm */,
-				B83DDC1F17942FBD00C06998 /* Texture2d.m */,
-				B83DDC2017942FBD00C06998 /* Texture2d.h */,
-				B8F2DB351792B69C00A809B8 /* Sprite.mm */,
-				B8F2DB361792B69D00A809B8 /* Sprite.h */,
-				B8FD70AD1794731D00785F12 /* Mesh.mm */,
-				B8FD70AE1794731D00785F12 /* Mesh.h */,
-				B842E20E1792E525009AA90A /* Scene.mm */,
-				B842E20F1792E525009AA90A /* Scene.h */,
-				B8CE55551794F0D100E980D9 /* SoundManager.mm */,
-				B8CE55561794F0D100E980D9 /* SoundManager.h */,
-				B8F2DB301792AF2E00A809B8 /* TextureManager.mm */,
-				B8F2DB311792AF2F00A809B8 /* TextureManager.h */,
+				B85C7F271798593B00988F4A /* appStuff */,
+				B85C7F281798594E00988F4A /* tools */,
+				B85C7F291798596F00988F4A /* nodes */,
+				B85C7F2A1798597A00988F4A /* components */,
+				B85C7F2B1798598A00988F4A /* resources */,
 				B8F2DB02179284E400A809B8 /* Supporting Files */,
 			);
 			path = asteroidsTest;
@@ -284,6 +329,7 @@
 				B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */,
 				B85B83D217956408004A4036 /* Object.mm in Sources */,
 				B85B83D517956470004A4036 /* Component.mm in Sources */,
+				B85C7F261798565300988F4A /* Inert.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

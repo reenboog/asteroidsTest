@@ -33,8 +33,6 @@ protected:
     virtual void setUp() = 0;
     
     void update(Float dt);
-
-    void maybeDie();
 public:
     Bool isRunning();
     Bool isAboutToDie();

@@ -15,6 +15,8 @@
 
 #import "SoundManager.h"
 
+#import "Inert.h"
+
 #import <iostream>
 #import <sstream>
 
@@ -63,17 +65,11 @@ Bool Scene::init() {
     this->addChild(m);
     
     m->applyComponent(ComponentSequence::runWithComponents({
-        MoveBy::runWithPositionDelta({100, 100}, 2),
-        Hider::runWithHidden(true),
-        Delay::runWithTime(2),
-        Hider::runWithHidden(false),
-        FadeTo::runWithAlpha(20, 1),
-        CallBlock::runWithBlock([=](){
-            m->removeFromParent();
-        }),
         CallBlock::runWithBlock([](){
             printf("running");
-        })
+        }),
+        Delay::runWithTime(3),
+        Inert::runWithVelocity({100, 100})
     }));
     
     Int fontSize = isIpad ? 40 : 15;
