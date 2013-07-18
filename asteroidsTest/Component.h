@@ -42,7 +42,7 @@ public:
     virtual void tick(Float dt) = 0;
     
     void run();
-    void stop();
+    virtual void stop();
     void pause();
 };
 
@@ -208,8 +208,9 @@ protected:
     
     void tick(Float dt);
     void setUp();
-    
 public:
+    void stop();
+    
     static Component * runWithComponents(const ComponentPool &components);
 };
 
@@ -225,6 +226,8 @@ protected:
     void doSomething();
     void setUp();
 public:
+    void stop();
+    
     static Component * runWithComponents(const ComponentPool &components);
 };
 

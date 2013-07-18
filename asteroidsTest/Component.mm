@@ -382,6 +382,14 @@ Component * ComponentSequence::runWithComponents(const ComponentPool &components
 void ComponentSequence::setUp() {
 }
 
+void ComponentSequence::stop() {
+    Component::stop();
+    
+    if(_current) {
+        _current->stop();
+    }
+}
+
 void ComponentSequence::tick(Float dt) {
     if(_components.empty()) {
         done();
@@ -414,6 +422,14 @@ Component * ComponentGroup::runWithComponents(const ComponentPool &components) {
 
 void ComponentGroup::setUp() {
     //
+}
+
+void ComponentGroup::stop() {
+    Component::stop();
+    
+    for(Component *component: _components) {
+        component->stop();
+    }
 }
 
 void ComponentGroup::doSomething() {
