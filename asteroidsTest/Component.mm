@@ -437,3 +437,24 @@ void ComponentGroup::doSomething() {
         _target->applyComponent(component);
     }
 }
+
+// callBlock
+
+CallBlock::~CallBlock() {
+}
+
+CallBlock::CallBlock(Void_VoidFunc block): InstantUse() {
+    _block = block;
+}
+
+Component * CallBlock::runWithBlock(Void_VoidFunc block) {
+    return new CallBlock(block);
+}
+
+void CallBlock::setUp() {
+    //
+}
+
+void CallBlock::doSomething() {
+    _block();
+}

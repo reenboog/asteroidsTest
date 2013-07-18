@@ -60,15 +60,21 @@ Bool Scene::init() {
     m->setVertex(2, {{-200, 400, 0}, {0, 200, 0, 255}}, false);
     m->setVertex(3, {{-100, -100, 0}, {200, 200, 200, 255}});
     
+    this->addChild(m);
+    
     m->applyComponent(ComponentSequence::runWithComponents({
         MoveBy::runWithPositionDelta({100, 100}, 2),
         Hider::runWithHidden(true),
         Delay::runWithTime(2),
         Hider::runWithHidden(false),
-        FadeTo::runWithAlpha(20, 1)
+        FadeTo::runWithAlpha(20, 1),
+        CallBlock::runWithBlock([=](){
+            m->removeFromParent();
+        }),
+        CallBlock::runWithBlock([](){
+            printf("running");
+        })
     }));
-    
-    this->addChild(m);
     
     Int fontSize = isIpad ? 40 : 15;
     

@@ -27,6 +27,8 @@ typedef bool Bool;
 typedef float Float;
 typedef double Double;
 
+typedef function<void()> Void_VoidFunc;
+
 class Node;
 class Component;
 

@@ -231,4 +231,19 @@ public:
     static Component * runWithComponents(const ComponentPool &components);
 };
 
+// callBlock
+
+class CallBlock: public InstantUse {
+protected:
+    Void_VoidFunc _block;
+protected:
+    CallBlock(Void_VoidFunc block);
+    ~CallBlock();
+
+    void setUp();
+    void doSomething();
+public:
+    static Component * runWithBlock(Void_VoidFunc block);
+};
+
 #endif /* defined(__asteroidsTest__Component__) */
