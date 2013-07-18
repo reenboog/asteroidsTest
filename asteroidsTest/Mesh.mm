@@ -8,7 +8,7 @@
 
 #include "Mesh.h"
 
-Mesh::Mesh(): Node() {
+Mesh::Mesh(): Node(), Blendable() {
     _lineWidth = 10.0;
 }
 
@@ -18,6 +18,14 @@ Mesh::~Mesh() {
 
 void Mesh::setLineWidth(Float width) {
     _lineWidth = width;
+}
+
+void Mesh::setAlpha(UChar alpha) {
+    Blendable::setAlpha(alpha);
+    
+    for(auto it = _vertices.begin(); it != _vertices.end(); ++it) {
+        it->color.a = _alpha;
+    }
 }
 
 Float Mesh::getLineWidth() {
@@ -43,27 +51,24 @@ Bool Mesh::setVertex(UInt index, const VertexPosColor &vertex, Bool skipColor) {
 }
 
 void Mesh::setColor(const Color4B &color) {
-    _color = color;
+    Blendable::setColor(color);
     
     for(auto it = _vertices.begin(); it != _vertices.end(); ++it) {
         it->color = _color;
     }
 }
 
-Color4B Mesh::getColor() {
-    return _color;
-}
-
 void Mesh::render() {
-    if (_vertices.size() < 2) {
+    if(_vertices.size() < 2) {
         return;
     }
     
     Node::render();
     
-    //glDisable(GL_TEXTURE_2D);
-    
     glLineWidth(_lineWidth);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     Int offset = (Int)_vertices.data();
     Int diff = offsetof(VertexPosColor, pos);
@@ -73,5 +78,11 @@ void Mesh::render() {
     diff = offsetof(VertexPosColor, color);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kMeshVertexStride, (void *)(offset + diff));
     
-	glDrawArrays(GL_LINE_STRIP, 0, _vertices.size() - 1);
+	glDrawArrays(GL_LINE_STRIP, 0, _vertices.size());
+    // what about fake smooth caps?
+    glEnable(GL_POINT_SMOOTH);
+    glPointSize(_lineWidth * 0.95);
+    glDrawArrays(GL_POINTS, 0, _vertices.size());
+    
+    glDisable(GL_BLEND);
 }

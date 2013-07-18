@@ -46,7 +46,34 @@ public:
     void pause();
 };
 
-// delay 
+// instantUse
+
+class InstantUse: public Component {
+protected:
+    InstantUse();
+    virtual ~InstantUse();
+    
+    void tick(Float dt);
+    virtual void doSomething() = 0;
+};
+
+// hider
+
+class Hider: public InstantUse {
+private:
+    Bool _hidden;
+protected:
+    Hider(Bool hidden);
+    virtual ~Hider();
+
+    void setUp();
+    void doSomething();
+
+public:
+    static Component * runWithHidden(Bool hidden);
+};
+
+// delay
 
 class Delay: public Component {
 protected:
@@ -88,7 +115,7 @@ protected:
     virtual ~MoveBy();
 
     void setUp();
-
+public:
     static Component * runWithPositionDelta(const Vector2 &pos, Float time);
 private:
     static Component * runWithPosition(const Vector2 &pos, Float time) {return nullptr;};
@@ -188,14 +215,14 @@ public:
 
 // spawn
 
-class ComponentGroup: public Component {
+class ComponentGroup: public InstantUse {
 private:
     ComponentPool _components;
 protected:
     ComponentGroup(const ComponentPool &components);
     ~ComponentGroup();
     
-    void tick(Float dt);
+    void doSomething();
     void setUp();
 public:
     static Component * runWithComponents(const ComponentPool &components);

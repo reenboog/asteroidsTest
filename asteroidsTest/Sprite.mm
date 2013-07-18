@@ -83,8 +83,6 @@ void Sprite::render() {
     diff = offsetof(VertexPosColorUV, color);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kQuadVertexStride, (void *)(offset + diff));
     
-    Color4B col = _color;
-    
     diff = offsetof(VertexPosColorUV, uv);
 	glTexCoordPointer(2, GL_FLOAT, kQuadVertexStride, (void *)(offset + diff));
 	

@@ -42,26 +42,33 @@ Bool Scene::init() {
     _back->setAlpha(255);
     _back->setRotation(-40);
 
-//    _back->applyComponent(ComponentSequence::runWithComponents(
-//                                                               {   MoveBy::runWithPositionDeltaAndDuration({100, 100}, 2.2),
-//                                                                   FadeTo::runWithAlpha(100, 3),
-//                                                                   ScaleTo::runWithScale(0.2, 1),
-//                                                                   FadeTo::runWithAlpha(30, 0.5),
-//                                                                   FadeTo::runWithAlpha(200, 0.5),
-//                                                                   ScaleTo::runWithScaleXY(0.5, 2.0, 2),
-//                                                                   Delay::runWithTime(2),
-//                                                                   MoveTo::runWithPositionAndDuration({0, 0}, 0.5)
-//                                                               }));
-    
     _back->applyComponent(ComponentGroup::runWithComponents({
                                                             RotateTo::runWithRotation(40, 1),
                                                             MoveTo::runWithPosition({10, 10}, 1),
                                                             FadeTo::runWithAlpha(20, 1),
                                                             ScaleTo::runWithScale(0.3, 1)
                                                             }));
-
-    //_back->setHidden(true);
     this->addChild(_back);
+    
+    Mesh *m = new Mesh();
+    
+    m->setPos({300, 200});
+    m->setRotation(5);
+    m->setLineWidth(5);
+    m->setVertex(0, {{-100, -100, 0}, {200, 200, 200, 255}});
+    m->setVertex(1, {{300, 300, 0}, {200, 200, 0, 255}}, false);
+    m->setVertex(2, {{-200, 400, 0}, {0, 200, 0, 255}}, false);
+    m->setVertex(3, {{-100, -100, 0}, {200, 200, 200, 255}});
+    
+    m->applyComponent(ComponentSequence::runWithComponents({
+        MoveBy::runWithPositionDelta({100, 100}, 2),
+        Hider::runWithHidden(true),
+        Delay::runWithTime(2),
+        Hider::runWithHidden(false),
+        FadeTo::runWithAlpha(20, 1)
+    }));
+    
+    this->addChild(m);
     
     Int fontSize = isIpad ? 40 : 15;
     

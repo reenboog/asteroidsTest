@@ -76,6 +76,39 @@ Bool Component::isAboutToDie() {
     return _aboutToDie;
 }
 
+// instantUse
+
+InstantUse::~InstantUse(){
+}
+
+InstantUse::InstantUse(): Component() {
+}
+
+void InstantUse::tick(Float dt) {
+    doSomething();
+    
+    done();
+}
+
+// hider
+Hider::~Hider(){
+}
+
+Hider::Hider(Bool hidden): InstantUse() {
+    _hidden = hidden;
+}
+
+void Hider::setUp() {
+}
+
+Component * Hider::runWithHidden(Bool hidden) {
+    return new Hider(hidden);
+}
+
+void Hider::doSomething(){
+    dynamic_cast<Hideable *>(_target)->setHidden(_hidden);
+}
+
 // delay
 
 Delay::Delay(Float time): Component() {
@@ -371,7 +404,7 @@ void ComponentSequence::tick(Float dt) {
 ComponentGroup::~ComponentGroup() {
 }
 
-ComponentGroup::ComponentGroup(const ComponentPool &components): Component() {
+ComponentGroup::ComponentGroup(const ComponentPool &components): InstantUse() {
     _components = components;
 }
 
@@ -383,10 +416,8 @@ void ComponentGroup::setUp() {
     //
 }
 
-void ComponentGroup::tick(Float dt) {
+void ComponentGroup::doSomething() {
     for(Component *component: _components) {
         _target->applyComponent(component);
     }
-    
-    done();
 }

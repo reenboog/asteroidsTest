@@ -11,10 +11,9 @@
 
 #import "Node.h"
 
-class Mesh: public Node {
+class Mesh: public Node, public Blendable {
 private:
     Float _lineWidth;
-    Color4B _color;
     
     VertexPosColorPool _vertices;
 public:
@@ -29,7 +28,7 @@ public:
     Float getLineWidth();
     
     void setColor(const Color4B &color);
-    Color4B getColor();
+    void setAlpha(UChar alpha);
 };
 
 #endif /* defined(__asteroidsTest__Mesh__) */
