@@ -111,6 +111,38 @@ public:
     virtual void setAlpha(UChar alpha);
 };
 
-//
+// texturable
+
+class Texturable {
+    Texturable();
+};
+
+// measurable
+
+class Measurable {
+protected:
+    Size2 _contentSize;
+    Float _contentRadius;
+protected:
+    Measurable();
+    virtual ~Measurable();
+public:
+    virtual void setContentSize(const Size2 &size);
+    virtual Size2 getContentSize();
+    
+    virtual void setContentRadius(Float radius);
+    virtual Float getContentRadius();
+};
+
+// intersectable
+
+class Intersectable: public Movable, public Measurable {
+protected:
+    Intersectable();
+    virtual ~Intersectable();
+public:
+    virtual Bool pointInArea(const Vector2 &pt);
+    virtual Bool intersectsWithObject(Intersectable *obj);
+};
 
 #endif /* defined(__asteroidsTest__Object__) */

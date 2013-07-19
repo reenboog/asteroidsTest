@@ -189,3 +189,51 @@ void Blendable::setAlpha(UChar alpha) {
     _alpha = alpha;
     _color.a = _alpha;
 }
+
+// measurable
+
+Measurable::~Measurable(){
+}
+
+Measurable::Measurable() {
+    _contentRadius = 0.0;
+    _contentSize = {0, 0};
+}
+
+void Measurable::setContentSize(const Size2 &size) {
+    _contentSize = size;
+}
+
+Size2 Measurable::getContentSize() {
+    return _contentSize;
+}
+
+void Measurable::setContentRadius(Float radius) {
+    _contentRadius = radius;
+}
+
+Float Measurable::getContentRadius() {
+    return _contentRadius;
+}
+
+// intersectable
+
+Intersectable::~Intersectable() {
+}
+
+Intersectable::Intersectable(): Movable(), Measurable() {
+}
+
+Bool Intersectable::pointInArea(const Vector2 &pt) {
+    if((_pos.x <= pt.x && _pos.y < pt.y) && (pt.x <= _pos.x + _contentSize.w && pt.y <= _pos.y + _contentSize.h)) {
+        return true;
+    }
+    
+    return false;
+}
+
+Bool Intersectable::intersectsWithObject(Intersectable *obj) {
+    Vector2 distance = (this->getPos() - obj->getPos());
+    
+    return distance.length() <= (this->getContentRadius() + obj->getContentRadius());
+}

@@ -15,14 +15,12 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-class Node: public Object, public Movable, public Scalable, public Rotatable, public Hideable {
+class Node: public Object, public Scalable, public Rotatable, public Hideable, public Intersectable {
 private:
     Bool _alive;
     
     Int _tag;
     Int _z;
-    
-    Size2 _contentSize;
     
     Node *_parent;
     NodePool _children;
@@ -53,11 +51,10 @@ public:
     Node* getParent();
     void setParent(Node *parent);
     
-    void setContentSize(const Size2 &size);
-    Size2 getContentSize();
-    virtual Bool pointInArea(const Vector2 &pt);
-    
     Bool addChild(Node *child);
+    
+    // a bit better interseciton check according to an average of scaleX & scaleY
+    Float getContentRadius();
 
     Bool removeChild(Node *child);
     Bool removeFromParent();

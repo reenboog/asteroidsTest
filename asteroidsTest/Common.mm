@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 reenboog. All rights reserved.
 //
 
-#include <stdio.h>
+#include "Common.h"
 
 CGRect GetBounds() {
     CGRect bounds = [[UIScreen mainScreen] bounds];

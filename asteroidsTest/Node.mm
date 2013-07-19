@@ -8,7 +8,7 @@
 
 #include "Node.h"
 
-Node::Node(): Movable(), Scalable(), Rotatable(), Hideable() {
+Node::Node(): Scalable(), Rotatable(), Hideable(), Intersectable() {
     _alive = true;
     
     _tag = 0;
@@ -100,24 +100,14 @@ void Node::applyTransform() {
     glScalef(_scaleX, _scaleY, 1.0);
 }
 
-void Node::setContentSize(const Size2 &size) {
-    _contentSize = size;
-}
-
-Size2 Node::getContentSize() {
-    return _contentSize;
-}
-
-Bool Node::pointInArea(const Vector2 &pt) {
-    if((_pos.x <= pt.x && _pos.y < pt.y) && (pt.x <= _pos.x + _contentSize.w && pt.y <= _pos.y + _contentSize.h)) {
-        return true;
-    }
-    
-    return false;
-}
-
 Node* Node::getParent() {
     return _parent;
+}
+
+Float Node::getContentRadius() {
+    Float avScale = (getScaleX() + getScaleX()) / 2.0;
+    
+    return Measurable::getContentRadius() * avScale;
 }
 
 void Node::setParent(Node *newParent) {

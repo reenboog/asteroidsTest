@@ -27,10 +27,12 @@ typedef bool Bool;
 typedef float Float;
 typedef double Double;
 
-typedef function<void()> Void_VoidFunc;
-
 class Node;
 class Component;
+class Intersectable;
+
+typedef function<void()> Void_VoidFunc;
+typedef function<void(Intersectable *)> Void_IntersectableFunc;
 
 class Vector2 {
 public:

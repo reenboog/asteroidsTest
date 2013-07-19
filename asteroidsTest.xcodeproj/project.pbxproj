@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B81010AB1799BBC3007F81CE /* Pad.mm in Sources */ = {isa = PBXBuildFile; fileRef = B81010A91799BBC3007F81CE /* Pad.mm */; };
 		B83DDC1617939D8300C06998 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B83DDC1517939D8300C06998 /* RootViewController.mm */; };
 		B83DDC1E17942A9500C06998 /* Label.mm in Sources */ = {isa = PBXBuildFile; fileRef = B83DDC1D17942A9500C06998 /* Label.mm */; };
 		B83DDC2117942FBD00C06998 /* Texture2d.m in Sources */ = {isa = PBXBuildFile; fileRef = B83DDC1F17942FBD00C06998 /* Texture2d.m */; };
@@ -41,6 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B81010A91799BBC3007F81CE /* Pad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Pad.mm; sourceTree = "<group>"; };
+		B81010AA1799BBC3007F81CE /* Pad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pad.h; sourceTree = "<group>"; };
 		B83DDC1417939D8300C06998 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		B83DDC1517939D8300C06998 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		B83DDC1C17942A9500C06998 /* Label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Label.h; sourceTree = "<group>"; };
@@ -54,6 +57,8 @@
 		B85B83D317956470004A4036 /* Component.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Component.mm; sourceTree = "<group>"; };
 		B85B83D417956470004A4036 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
 		B85C7F251798565300988F4A /* Inert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Inert.h; sourceTree = "<group>"; };
+		B862F1581798FCFC00612CD4 /* Collider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Collider.h; sourceTree = "<group>"; };
+		B862F159179902DE00612CD4 /* BoundToArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundToArea.h; sourceTree = "<group>"; };
 		B8CE55551794F0D100E980D9 /* SoundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundManager.mm; sourceTree = "<group>"; };
 		B8CE55561794F0D100E980D9 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		B8CE55581794F33200E980D9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -152,6 +157,8 @@
 				B8FD70AE1794731D00785F12 /* Mesh.h */,
 				B842E20E1792E525009AA90A /* Scene.mm */,
 				B842E20F1792E525009AA90A /* Scene.h */,
+				B81010A91799BBC3007F81CE /* Pad.mm */,
+				B81010AA1799BBC3007F81CE /* Pad.h */,
 			);
 			name = nodes;
 			sourceTree = "<group>";
@@ -164,6 +171,8 @@
 				B85B83D317956470004A4036 /* Component.mm */,
 				B85B83D417956470004A4036 /* Component.h */,
 				B85C7F251798565300988F4A /* Inert.h */,
+				B862F159179902DE00612CD4 /* BoundToArea.h */,
+				B862F1581798FCFC00612CD4 /* Collider.h */,
 			);
 			name = components;
 			sourceTree = "<group>";
@@ -326,6 +335,7 @@
 				B8CE55571794F0D100E980D9 /* SoundManager.mm in Sources */,
 				B85B83D217956408004A4036 /* Object.mm in Sources */,
 				B85B83D517956470004A4036 /* Component.mm in Sources */,
+				B81010AB1799BBC3007F81CE /* Pad.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,8 +24,6 @@ protected:
     Texture _texture;
     
     Quad _quad;
-
-    Size2 _size;
     
     Vector2 _anchorPoint;
 protected:
@@ -49,6 +47,8 @@ public:
     // |   |
     //  ---2
     void setUV(Float u0, Float v0, Float u1, Float v1);
+    void setUV(const UVRect &uv);
+    UVRect getUV();
     
     Bool pointInArea(const Vector2 &pt);
     
@@ -57,8 +57,6 @@ public:
     
     Vector2 getAnchorPoint();
     void setAnchorPoint(Vector2 anchor);
-    
-    Size2 getSize();
 };
 
 #endif /* defined(__match3Test__Sprite__) */

@@ -16,6 +16,20 @@ Mesh::~Mesh() {
     
 }
 
+void Mesh::recalcContentRadius() {
+    Float radius = 0.0;
+    
+    for(VertexPosColor v: _vertices) {
+        Vector2 pos = {v.pos.x, v.pos.y};
+        Float length = pos.length();
+        if(length > radius) {
+            radius = length;
+        }
+    }
+    
+    setContentRadius(radius);
+}
+
 void Mesh::setLineWidth(Float width) {
     _lineWidth = width;
 }
@@ -30,10 +44,6 @@ void Mesh::setAlpha(UChar alpha) {
 
 Float Mesh::getLineWidth() {
     return  _lineWidth;
-}
-
-void Mesh::setContentRadius(Float radius) {
-    _contentRadius = radius;
 }
 
 Bool Mesh::pointInArea(const Vector2 &pt) {
@@ -55,6 +65,8 @@ Bool Mesh::setVertex(UInt index, const VertexPosColor &vertex, Bool skipColor) {
     if(skipColor) {
         _vertices[index].color = _color;
     }
+    
+    recalcContentRadius();
     
     return true;
 }

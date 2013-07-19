@@ -20,6 +20,14 @@ Sprite::~Sprite() {
 }
 
 Sprite::Sprite(): Node(), Blendable() {
+    Color4B tmpColor = {255, 255, 255, 255};
+    
+    _quad.bl.color = tmpColor;
+    _quad.br.color = tmpColor;
+    _quad.tl.color = tmpColor;
+    _quad.tr.color = tmpColor;
+    
+    _anchorPoint = v2(0.5, 0.5);
 }
 
 Sprite::Sprite(string file): Sprite() {
@@ -41,25 +49,24 @@ void Sprite::loadTexture(string file, Float x, Float y, Float width, Float heigh
     GLint tWidth = _texture.width;
     GLint tHeight = _texture.height;
     
-    _size.w = (width == -1 ? tWidth : width);
-    _size.h = (height == -1 ? tHeight : height);
+    Size2 size;
+    size.w = (width == -1 ? tWidth : width);
+    size.h = (height == -1 ? tHeight : height);
     
-    setContentSize(_size);
+    setContentSize(size);
+    // a very rough intersection check for sprites
+    setContentRadius(size.w > size.h ? size.w : size.h);
     setColor(_color);
     
-    //apply tex coords
-    _quad.br.uv = {(x + _size.w) / tWidth, (y + _size.h) / tHeight};
-    _quad.tr.uv = {(x + _size.w) / tWidth, y / tHeight};
+    // apply tex coords
+    _quad.br.uv = {(x + size.w) / tWidth, (y + size.h) / tHeight};
+    _quad.tr.uv = {(x + size.w) / tWidth, y / tHeight};
     _quad.tl.uv = {x / tWidth, y / tHeight};
-    _quad.bl.uv = {x / tWidth, (y + _size.h) / tHeight};
+    _quad.bl.uv = {x / tWidth, (y + size.h) / tHeight};
     
     updateQuad();
 
     printf("+sprite %s created. \n", _file.c_str());
-}
-
-Size2 Sprite::getSize() {
-    return _size;
 }
 
 void Sprite::cleanup() {
@@ -104,10 +111,23 @@ void Sprite::setUV(Float u0, Float v0, Float u1, Float v1) {
     _quad.bl.uv.u = u0; _quad.bl.uv.v = v1;
 }
 
-Bool Sprite::pointInArea(const Vector2 &pt) {
-    Vector2 anchorCorrection = v2(_anchorPoint.x * _size.w, _anchorPoint.y * _size.h);
+void Sprite::setUV(const UVRect &uv) {
+    _quad.br.uv.u = uv._1.u; _quad.br.uv.v = uv._1.v;
+    _quad.tr.uv.u = uv._1.u; _quad.tr.uv.v = uv._0.v;
+    _quad.tl.uv.u = uv._0.u; _quad.tl.uv.v = uv._0.v;
+    _quad.bl.uv.u = uv._0.u; _quad.bl.uv.v = uv._1.v;
+}
 
+UVRect Sprite::getUV() {
+    UVRect rect = {_quad.tl.uv, _quad.br.uv};
+    
+    return rect;
+}
+
+Bool Sprite::pointInArea(const Vector2 &pt) {
     Size2 size = getContentSize();
+    Vector2 anchorCorrection = v2(_anchorPoint.x * size.w, _anchorPoint.y * size.h);
+
     Vector2 pos = _pos;
     
     pos -= anchorCorrection;
@@ -120,10 +140,12 @@ Bool Sprite::pointInArea(const Vector2 &pt) {
 }
 
 void Sprite::updateQuad() {
-    Vector2 anchorCorrection = v2((0.5 - _anchorPoint.x) * _size.w, (0.5 - _anchorPoint.y) * _size.h);
+    Size2 size = getContentSize();
     
-    Float hw = _size.w / 2.0;
-    Float hh = _size.h / 2.0;
+    Vector2 anchorCorrection = v2((0.5 - _anchorPoint.x) * size.w, (0.5 - _anchorPoint.y) * size.h);
+    
+    Float hw = size.w / 2.0;
+    Float hh = size.h / 2.0;
     
     _quad.br.pos = Vector3{hw + anchorCorrection.x, hh + anchorCorrection.y, 0};
     _quad.tr.pos = Vector3{hw + anchorCorrection.x, -hh + anchorCorrection.y, 0};

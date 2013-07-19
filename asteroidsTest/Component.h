@@ -37,6 +37,8 @@ public:
     Bool isRunning();
     Bool isAboutToDie();
     
+    Object * getTarget();
+    
     virtual void tick(Float dt) = 0;
     
     void run();
@@ -54,12 +56,12 @@ protected:
     InstanceCollector(T *c) {
         __instances.push_back(c);
         
-        printf("added instance!\n");
+        //printf("added instance!\n");
     }
     
     virtual ~InstanceCollector() {
         __instances.erase(remove(__instances.begin(), __instances.end(), this));
-        printf("removed instance!\n");
+        //printf("removed instance!\n");
     }
 };
 
@@ -138,6 +140,24 @@ public:
     static Component * runWithPositionDelta(const Vector2 &pos, Float time);
 private:
     static Component * runWithPosition(const Vector2 &pos, Float time) {return nullptr;};
+};
+
+// transformUV
+// can be applied to sprites only
+class TransformUV: public Component {
+protected:
+    Vector2 _velocity;
+    // calling setUV with this component activated will
+    // produce undesired behaviour
+    UVRect _originalRect;
+protected:
+    TransformUV(const Vector2 &v);
+    ~TransformUV();
+    
+    void setUp();
+    void tick(Float dt);
+public:
+    static Component * runWithVelocity(const Vector2 &v);
 };
 
 // rotateTo
@@ -245,7 +265,6 @@ protected:
     void doSomething();
     void setUp();
 public:
-    void stop();
     
     static Component * runWithComponents(const ComponentPool &components);
 };

@@ -14,9 +14,10 @@
 class Mesh: public Node, public Blendable {
 private:
     Float _lineWidth;
-    Float _contentRadius;
     
     VertexPosColorPool _vertices;
+private:
+    void recalcContentRadius();
 public:
     Mesh();
     ~Mesh();
@@ -28,7 +29,7 @@ public:
     void setLineWidth(Float width);
     Float getLineWidth();
     
-    void setContentRadius(Float radius);
+    //void setContentRadius(Float radius);
     Bool pointInArea(const Vector2 &pt);
     
     void setColor(const Color4B &color);

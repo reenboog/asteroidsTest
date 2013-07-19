@@ -17,15 +17,6 @@ Label::Label(const string &str, Float fontSize, const string &font): Sprite() {
     _font = font;
     _tex = nil;
     
-    Color4B tmpColor = {255, 255, 255, 255};
-    
-    _quad.bl.color = tmpColor;
-    _quad.br.color = tmpColor;
-    _quad.tl.color = tmpColor;
-    _quad.tr.color = tmpColor;
-    
-    _anchorPoint = v2(0.5, 0.5);
-    
     setString(str);
 }
 
@@ -60,9 +51,8 @@ void Label::setString(const string &str) {
     _texture.width = _tex.pixelsWide;
     _texture.height = _tex.pixelsHigh;
     
-    _size.w = dim.width;
-    _size.h = dim.height;
-    
+    setContentSize({(Int)dim.width, (Int)dim.height});
+
     updateQuad();
     setUV(0, 0, _tex.maxS, _tex.maxT);
 }
