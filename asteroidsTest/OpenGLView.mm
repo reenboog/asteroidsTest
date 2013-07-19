@@ -7,9 +7,7 @@
 //
 
 #import "OpenGLView.h"
-#import "FilesUtils.h"
-#import "TextureManager.h"
-
+#import "Common.h"
 #import "Scene.h"
 
 @implementation OpenGLView
@@ -90,7 +88,9 @@
         [self setupContext];
         [self setupRenderBuffer];
         [self setupFrameBuffer];
-        //[self compileShaders];
+        
+        // enable multiple touches
+        self.multipleTouchEnabled = YES;
         
         gettimeofday(&_lastUpdate,  0);
         
@@ -196,6 +196,60 @@
     
 
     [_context presentRenderbuffer: GL_RENDERBUFFER];
+}
+
+#pragma mark - touches
+
+- (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event {
+    Vector2Pool positions;
+    
+    CGRect bounds = GetBounds();
+    
+    for(UITouch *touch in touches) {
+        CGPoint touchLocation = [touch locationInView: self];
+        positions.push_back({touchLocation.x, bounds.size.height - touchLocation.y});
+    }
+    
+    _scene->touchesBegan(positions);
+}
+
+- (void) touchesMoved: (NSSet *) touches withEvent: (UIEvent *) event {
+    Vector2Pool positions;
+    
+    CGRect bounds = GetBounds();
+    
+    for(UITouch *touch in touches) {
+        CGPoint touchLocation = [touch locationInView: self];
+        positions.push_back({touchLocation.x, bounds.size.height - touchLocation.y});
+    }
+    
+    _scene->touchesMoved(positions);
+}
+
+- (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event {
+    Vector2Pool positions;
+    
+    CGRect bounds = GetBounds();
+    
+    for(UITouch *touch in touches) {
+        CGPoint touchLocation = [touch locationInView: self];
+        positions.push_back({touchLocation.x, bounds.size.height - touchLocation.y});
+    }
+    
+    _scene->touchesEnded(positions);
+}
+
+- (void) touchesCancelled: (NSSet *) touches withEvent:(UIEvent *) event {
+    Vector2Pool positions;
+    
+    CGRect bounds = GetBounds();
+    
+    for(UITouch *touch in touches) {
+        CGPoint touchLocation = [touch locationInView: self];
+        positions.push_back({touchLocation.x, bounds.size.height - touchLocation.y});
+    }
+    
+    _scene->touchesCancelled(positions);
 }
 
 @end

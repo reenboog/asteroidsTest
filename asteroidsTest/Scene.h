@@ -14,8 +14,9 @@
 class Sprite;
 class Field;
 class Label;
+class Pad;
 
-class Scene: public Node {
+class Scene: public Node, public Touchable {
 private:
     //logic
     Int _score;
@@ -28,6 +29,10 @@ private:
     Label *_timeLabel;
     
     Size2 _bounds;
+    
+    // pads
+    Pad *_movementPad;
+    Pad *_firePad;
 public:
     Scene();
     ~Scene();
@@ -40,14 +45,21 @@ public:
     void restart();
     void gameOver();
 
-    //score logic
+    // score logic
     void applyPoints(Int points);
 
     void setScore(Int score);
     Int getScore();
     
-    //time logic
+    // time logic
     void tick(Float dt);
+    
+    // touches
+    void touchesBegan(const Vector2Pool &touches);
+    void touchesMoved(const Vector2Pool &touches);
+    void touchesEnded(const Vector2Pool &touches);
+    void touchesCancelled(const Vector2Pool &touches);
+
 private:
     void formatTime();
 };

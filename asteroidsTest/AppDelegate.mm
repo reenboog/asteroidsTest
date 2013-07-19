@@ -31,7 +31,7 @@
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions {
     CGRect bounds = GetBounds();
     
-    _window = [[UIWindow alloc] initWithFrame: bounds];
+    _window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     _glView = [[OpenGLView alloc] initWithFrame: bounds];
 
     _viewController = [[RootViewController alloc] initWithNibName: nil bundle: nil];

@@ -145,4 +145,30 @@ public:
     virtual Bool intersectsWithObject(Intersectable *obj);
 };
 
+// touchable
+
+//- (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event {
+//    printf("touches!\n");
+//}
+//
+//- (void) touchesMoved: (NSSet *) touches withEvent: (UIEvent *) event {
+//    
+//}
+//
+//- (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event {
+//    
+//}
+//
+//- (void) touchesCancelled: (NSSet *) touches withEvent:(UIEvent *) event {
+//    
+//}
+
+
+class Touchable {
+    virtual void touchesBegan(const Vector2Pool &touches) = 0;
+    virtual void touchesMoved(const Vector2Pool &touches) = 0;
+    virtual void touchesEnded(const Vector2Pool &touches) = 0;
+    virtual void touchesCancelled(const Vector2Pool &touches) = 0;
+};
+
 #endif /* defined(__asteroidsTest__Object__) */

@@ -18,6 +18,7 @@
 #import "Inert.h"
 #import "BoundToArea.h"
 #import "Collider.h"
+#import "Pad.h"
 
 #import <iostream>
 #import <sstream>
@@ -42,21 +43,13 @@ Bool Scene::init() {
     
     Bool isIpad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
     
+    // back
     _back = new Sprite("back.png");
     _back->setPos({bounds.size.width / 2, bounds.size.height / 2});
-    //_back->setRotation(30);
     _back->setAlpha(255);
     
-    //_back->applyComponent(TransformUV::runWithVelocity({-0.1, 0}));
-
-//    _back->applyComponent(ComponentGroup::runWithComponents({
-//                                                            RotateTo::runWithRotation(40, 1),
-//                                                            MoveTo::runWithPosition({10, 10}, 1),
-//                                                            FadeTo::runWithAlpha(20, 1),
-//                                                            ScaleTo::runWithScale(0.3, 1)
-//                                                            }));
     this->addChild(_back);
-    
+    // parallax
     Sprite *parallax = new Sprite("parallax.png");
     parallax->setPos({bounds.size.width / 2, bounds.size.height / 2});
     parallax->setAlpha(50);
@@ -72,52 +65,25 @@ Bool Scene::init() {
     parallax->applyComponent(TransformUV::runWithVelocity({0.2}));
     this->addChild(parallax);
     
-    Mesh *m = new Mesh();
+    // pads
+    _movementPad = new Pad("moveBtn.png", [](){});
+    _movementPad->setPos({0.075f * bounds.size.width, 0.1f * bounds.size.height});
     
+    this->addChild(_movementPad);
+    
+    _firePad = new Pad("fireBtn.png", [](){});
+    _firePad->setPos({0.925f * bounds.size.width, 0.1f * bounds.size.height});
+    
+    this->addChild(_firePad);
+    
+    
+    //
     Sprite *s = new Sprite("ships.png");
     s->setPos({bounds.size.width / 2, bounds.size.height / 2});
     
     this->addChild(s);
     
-    m->setPos({100, 200});
-    m->setLineWidth(5);
-    m->setVertex(0, {{-100, -100, 0}, {200, 200, 200, 255}}, false);
-    m->setVertex(1, {{100, -100, 0}, {200, 200, 0, 255}}, false);
-    m->setVertex(2, {{0, 100, 0}, {10, 0, 200, 255}}, false);
-    m->setVertex(3, {{-100, -100, 0}, {255, 0, 0, 0}}, false);
-    
-    m->applyComponent(ComponentGroup::runWithComponents({
-        Inert::runWithVelocity({100, 0}),
-        Collider::runWithBlock([=](Intersectable *obj){
-            printf("collided! left\n");
-            m->removeFromParent();
-        })
-    }));
-    
-    m->setContentRadius(m->getContentRadius() * 0.8);
-    
-    this->addChild(m);
-    
-    m = new Mesh();
-    
-    m->setPos({800, 200});
-    m->setLineWidth(5);
-    m->setVertex(0, {{-100, -100, 0}, {200, 200, 200, 255}}, false);
-    m->setVertex(1, {{100, -100, 0}, {200, 200, 0, 255}}, false);
-    m->setVertex(2, {{0, 100, 0}, {10, 0, 200, 255}}, false);
-    m->setVertex(3, {{-100, -100, 0}, {255, 0, 0, 0}}, false);
-    
-    m->setContentRadius(m->getContentRadius() * 0.8);
-    
-    m->applyComponent(ComponentGroup::runWithComponents({
-        Inert::runWithVelocity({-100, 0}),
-        Collider::runWithBlock([](Intersectable *obj){
-            printf("collided! right\n");
-        })
-    }));
-
-    
-    this->addChild(m);
+  
 
     
     Int fontSize = isIpad ? 40 : 15;
@@ -230,4 +196,22 @@ void Scene::tick(Float dt) {
     _time += dt;
     
     formatTime();
+}
+
+// touches
+void Scene::touchesBegan(const Vector2Pool &touches) {
+}
+
+void Scene::touchesMoved(const Vector2Pool &touches) {
+    for(Vector2 v: touches) {
+        printf("touch: %f, %f\n", v.x, v.y);
+    }
+}
+
+void Scene::touchesEnded(const Vector2Pool &touches) {
+    
+}
+
+void Scene::touchesCancelled(const Vector2Pool &touches) {
+    
 }

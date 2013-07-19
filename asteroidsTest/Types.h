@@ -149,5 +149,6 @@ typedef vector<Node *> NodePool;
 typedef map<string, Texture> TextureMap;
 typedef vector<VertexPosColor> VertexPosColorPool;
 typedef vector<Component *> ComponentPool;
+typedef vector<Vector2> Vector2Pool;
 
 #endif
