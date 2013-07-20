@@ -27,7 +27,7 @@ Sprite::Sprite(): Node(), Blendable() {
     _quad.tl.color = tmpColor;
     _quad.tr.color = tmpColor;
     
-    _anchorPoint = v2(0.5, 0.5);
+    _anchorPoint = {0.5, 0.5};
 }
 
 Sprite::Sprite(string file): Sprite() {
@@ -40,7 +40,7 @@ Sprite::Sprite(string file, Int x, Int y, Int w, Int h): Sprite() {
 }
 
 void Sprite::loadTexture(string file, Float x, Float y, Float width, Float height) {
-    _anchorPoint = v2(0.5, 0.5);
+    _anchorPoint = {0.5, 0.5};
     
     _file = file;
     
@@ -126,11 +126,11 @@ UVRect Sprite::getUV() {
 
 Bool Sprite::pointInArea(const Vector2 &pt) {
     Size2 size = getContentSize();
-    Vector2 anchorCorrection = v2(_anchorPoint.x * size.w, _anchorPoint.y * size.h);
+    Vector2 anchorCorrection = {_anchorPoint.x * size.w, _anchorPoint.y * size.h};
 
     Vector2 pos = _pos;
     
-    pos -= anchorCorrection;
+    pos.decrease(anchorCorrection);
 
     if((pos.x <= pt.x && pos.y < pt.y) && (pt.x <= pos.x + size.w && pt.y <= pos.y + size.h)) {
         return true;
@@ -142,7 +142,7 @@ Bool Sprite::pointInArea(const Vector2 &pt) {
 void Sprite::updateQuad() {
     Size2 size = getContentSize();
     
-    Vector2 anchorCorrection = v2((0.5 - _anchorPoint.x) * size.w, (0.5 - _anchorPoint.y) * size.h);
+    Vector2 anchorCorrection = {(0.5f - _anchorPoint.x) * size.w, (0.5f - _anchorPoint.y) * size.h};
     
     Float hw = size.w / 2.0;
     Float hh = size.h / 2.0;

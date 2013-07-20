@@ -200,12 +200,16 @@ void Scene::tick(Float dt) {
 
 // touches
 void Scene::touchesBegan(const Vector2Pool &touches) {
+    for(Vector2 v: touches) {
+        //printf("touch: %f, %f\n", v.x, v.y);
+        Vector2 l = _firePad->getLocationInLocalSpace(v);
+        
+        printf("location: %f, %f\n", l.x, l.y);
+    }
+
 }
 
 void Scene::touchesMoved(const Vector2Pool &touches) {
-    for(Vector2 v: touches) {
-        printf("touch: %f, %f\n", v.x, v.y);
-    }
 }
 
 void Scene::touchesEnded(const Vector2Pool &touches) {

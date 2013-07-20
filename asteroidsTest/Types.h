@@ -38,31 +38,31 @@ class Vector2 {
 public:
     Float x, y;
     
-    Float length() {
+    Float length() const {
         return sqrtf(x * x + y * y);
     }
     
-    Bool operator == (const Vector2 &r) {
+    Bool equals(const Vector2 &r) const {
         return x == r.x && y == r.y;
     }
     
-    Vector2 operator +(const Vector2 &r) {
+    Vector2 add(const Vector2 &r) const {
         Vector2 result{x + r.x, y + r.y};
         return result;
     }
     
-    Vector2& operator +=(const Vector2 &r) {
+    Vector2& increase(const Vector2 &r) {
         x = x + r.x;
         y = y + r.y;
         
         return *this;
     }
     
-    Vector2 operator *(Float s) {
+    Vector2 mul(Float s) const {
         return Vector2{x * s, y * s};
     }
     
-    Vector2 operator -() const {
+    Vector2 neg() const {
         Vector2 result = *this;
         result.x = -x;
         result.y = -y;
@@ -70,12 +70,12 @@ public:
         return result;
     }
     
-    Vector2& operator -=(const Vector2 &r) {
-        *this += -r;
+    Vector2& decrease(const Vector2 &r) {
+        this->increase(r.neg());
         return *this;
     }
     
-    Vector2 operator -(const Vector2 &r) {
+    Vector2 sub(const Vector2 &r) const {
         return Vector2{x - r.x, y - r.y};
     }
 };
@@ -84,8 +84,6 @@ class Vector3 {
 public:
     Float x, y, z;
 };
-
-#define v2(x, y) (Vector2{(Float)x, (Float)y})
 
 inline Float cut(Float num, Float min, Float max) {
     if(num < min)

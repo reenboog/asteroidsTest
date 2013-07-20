@@ -233,7 +233,7 @@ Bool Intersectable::pointInArea(const Vector2 &pt) {
 }
 
 Bool Intersectable::intersectsWithObject(Intersectable *obj) {
-    Vector2 distance = (this->getPos() - obj->getPos());
+    Vector2 distance = this->getPos().sub(obj->getPos());
     
     return distance.length() <= (this->getContentRadius() + obj->getContentRadius());
 }

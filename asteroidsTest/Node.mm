@@ -110,6 +110,21 @@ Float Node::getContentRadius() {
     return Measurable::getContentRadius() * avScale;
 }
 
+Vector2 Node::getLocationInLocalSpace(const Vector2 &pos) {
+    
+    Vector2 p = getAbsolutePos();
+    
+    return pos.sub(p);
+}
+
+Vector2 Node::getAbsolutePos() {
+    if(_parent) {
+        return _pos.sub(_parent->getAbsolutePos());
+    }
+    
+    return _pos;
+}
+
 void Node::setParent(Node *newParent) {
     //assume we don't share any children wetween parents
     //to keep simplicity

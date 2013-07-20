@@ -42,7 +42,7 @@ void Inert::setUp() {
 
 void Inert::tick(Float dt) {
     Movable *t = dynamic_cast<Movable *>(_target);
-    Vector2 pos = t->getPos() + (_velocity * dt);
+    Vector2 pos = t->getPos().add(_velocity.mul(dt));
     
     t->setPos(pos);
 }

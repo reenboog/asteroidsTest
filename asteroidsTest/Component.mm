@@ -163,7 +163,7 @@ void MoveTo::setUp() {
     // using dynamic_cast is not the best idea
     // but it's better than virtual inheritance in our case
     _startPos = dynamic_cast<Movable *>(_target)->getPos();
-    _delta = _endPos - _startPos;
+    _delta = _endPos.sub(_startPos);
 }
 
 void MoveTo::tick(Float dt) {
@@ -204,8 +204,8 @@ Component * MoveBy::runWithPositionDelta(const Vector2 &pos, Float time) {
 void MoveBy::setUp() {
     // assume, _endPos keeps our delta
     _startPos = dynamic_cast<Movable *>(_target)->getPos();
-    _endPos = _startPos + _endPos;
-    _delta = _endPos - _startPos;
+    _endPos = _startPos.add(_endPos);
+    _delta = _endPos.sub(_startPos);
 }
 
 // transformUV
@@ -299,7 +299,7 @@ void RotateBy::setUp() {
 // scaleTo
 
 ScaleTo::ScaleTo(Float scaleX, Float scaleY, Float time): Delay(time) {
-    _endScale = Vector2{scaleX, scaleY};
+    _endScale = {scaleX, scaleY};
     
     //printf("+ ScaleTo created\n");
 }
@@ -321,8 +321,8 @@ void ScaleTo::setUp() {
     // but it's better than virtual inheritance in our case
     Scalable *t = dynamic_cast<Scalable *>(_target);
 
-    _startScale = Vector2{t->getScaleX(), t->getScaleY()};
-    _delta = _endScale - _startScale;
+    _startScale = {t->getScaleX(), t->getScaleY()};
+    _delta = _endScale.sub(_startScale);
 }
 
 void ScaleTo::tick(Float dt) {

@@ -55,6 +55,11 @@ public:
     
     // a bit better interseciton check according to an average of scaleX & scaleY
     Float getContentRadius();
+    
+    // world to local
+    Vector2 getLocationInLocalSpace(const Vector2 &pos);
+    // local to world
+    Vector2 getAbsolutePos();
 
     Bool removeChild(Node *child);
     Bool removeFromParent();
