@@ -51,7 +51,7 @@ void Label::setString(const string &str) {
     _texture.width = _tex.pixelsWide;
     _texture.height = _tex.pixelsHigh;
     
-    setContentSize({(Int)dim.width, (Int)dim.height});
+    setContentSize({dim.width, dim.height});
 
     updateQuad();
     setUV(0, 0, _tex.maxS, _tex.maxT);

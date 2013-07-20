@@ -11,7 +11,7 @@
 
 #include "Sprite.h"
 
-#define kMaxPadDisplacement 200
+#define kMaxPadDisplacement 30
 
 class Pad: public Node {
 private:

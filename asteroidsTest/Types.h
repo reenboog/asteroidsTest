@@ -70,6 +70,12 @@ public:
         return result;
     }
     
+    void normalize() {
+        Float length = this->length();
+        x /= length;
+        y /= length;
+    }
+    
     Vector2& decrease(const Vector2 &r) {
         this->increase(r.neg());
         return *this;
@@ -96,7 +102,11 @@ inline Float cut(Float num, Float min, Float max) {
 }
 
 struct Size2 {
-    Int w, h;
+    Float w, h;
+    
+    Size2 mul(Float s) {
+        return Size2{w * s, h * s};
+    }
 };
 
 struct Rect4 {

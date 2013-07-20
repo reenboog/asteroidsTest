@@ -29,6 +29,7 @@ Scene::Scene(): Node() {
     _back = nullptr;
     _timeLabel = nullptr;
     _gameOver = true;
+    _time = 0;
 }
 
 Scene::~Scene() {
@@ -200,16 +201,34 @@ void Scene::tick(Float dt) {
 
 // touches
 void Scene::touchesBegan(const Vector2Pool &touches) {
+    Int touchesCount = 0;
     for(Vector2 v: touches) {
         //printf("touch: %f, %f\n", v.x, v.y);
         Vector2 l = _firePad->getLocationInLocalSpace(v);
-        
-        printf("location: %f, %f\n", l.x, l.y);
-    }
 
+        //allow 2 touches only
+        touchesCount++;
+        if(touchesCount == 2) {
+            break;
+        }
+        //printf("location: %f, %f\n", l.x, l.y);
+    }
 }
 
 void Scene::touchesMoved(const Vector2Pool &touches) {
+    Int touchesCount = 0;
+    for(Vector2 v: touches) {
+        
+        _firePad->applyDisplacement(v);
+        _movementPad->applyDisplacement(v);
+        
+        //allow 2 touches only
+        touchesCount++;
+        if(touchesCount == 2) {
+            break;
+        }
+        //printf("location: %f, %f\n", l.x, l.y);
+    }
 }
 
 void Scene::touchesEnded(const Vector2Pool &touches) {
