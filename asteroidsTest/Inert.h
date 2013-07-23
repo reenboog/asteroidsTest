@@ -9,8 +9,8 @@
 #ifndef __asteroidsTest__Inert__
 #define __asteroidsTest__Inert__
 
-#include "Component.h"
-#include "Object.h"
+#import "Component.h"
+#import "Object.h"
 
 class Inert: public Component, public InstanceCollector<Inert> {
 private:
@@ -23,24 +23,28 @@ public:
     void setUp();
     void tick(Float dt);
     
+    void setVelocity(const Vector2 &v) {_velocity = v;};
+    Vector2 getVelocity() {return _velocity;};
+    
     static Component * runWithVelocity(const Vector2 &v);
 };
 
-Inert::~Inert(){
+inline Inert::~Inert(){
 }
 
-Inert::Inert(const Vector2 &v): Component(), InstanceCollector<Inert>(this) {
+inline Inert::Inert(const Vector2 &v): Component(), InstanceCollector<Inert>(this) {
     _velocity = v;
 }
 
-Component * Inert::runWithVelocity(const Vector2 &v) {
+inline Component * Inert::runWithVelocity(const Vector2 &v) {
     return new Inert(v);
 }
 
-void Inert::setUp() {
+inline void Inert::setUp() {
 }
 
-void Inert::tick(Float dt) {
+inline void Inert::tick(Float dt) {
+    
     Movable *t = dynamic_cast<Movable *>(_target);
     Vector2 pos = t->getPos().add(_velocity.mul(dt));
     

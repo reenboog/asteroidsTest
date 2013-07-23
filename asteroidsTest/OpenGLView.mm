@@ -150,7 +150,7 @@
         dt = MAX(0, dt);
     }
     
-    //NSLog(@"duration: %f", (float)dt);
+    //NSLog(@"dt: %f", (float)dt);
     
     [self update: dt];
     [self render];

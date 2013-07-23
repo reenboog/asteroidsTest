@@ -177,3 +177,35 @@ void Sprite::setAlpha(UChar alpha) {
     
     setColor(_color);
 }
+
+// transformUV
+
+TransformUV::~TransformUV() {
+}
+
+TransformUV::TransformUV(const Vector2 &v) {
+    _velocity = v;
+}
+
+Component * TransformUV::runWithVelocity(const Vector2 &v) {
+    return new TransformUV(v);
+}
+
+void TransformUV::setUp() {
+    Sprite *t = dynamic_cast<Sprite *>(_target);
+    _originalRect = t->getUV();
+}
+
+void TransformUV::tick(Float dt) {
+    Sprite *t = dynamic_cast<Sprite *>(_target);
+    UVRect uv = t->getUV();
+    
+    // bug: clamp texture coords to [0..1]!
+    // uv overflow is possible!
+    uv._0.u += _velocity.x * dt;
+    uv._0.u += _velocity.y * dt;
+    uv._1.u += _velocity.x * dt;
+    uv._1.u += _velocity.y * dt;
+    
+    t->setUV(uv);
+}

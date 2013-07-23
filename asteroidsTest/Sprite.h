@@ -11,6 +11,7 @@
 
 #import "Node.h"
 #import "Types.h"
+#import "Component.h"
 
 // assume we have this vertex order:
 // 3---2
@@ -57,6 +58,24 @@ public:
     
     Vector2 getAnchorPoint();
     void setAnchorPoint(Vector2 anchor);
+};
+
+// transformUV
+// can be applied to sprites only
+class TransformUV: public Component {
+protected:
+    Vector2 _velocity;
+    // calling setUV with this component activated will
+    // produce undesired behaviour
+    UVRect _originalRect;
+protected:
+    TransformUV(const Vector2 &v);
+    ~TransformUV();
+    
+    void setUp();
+    void tick(Float dt);
+public:
+    static Component * runWithVelocity(const Vector2 &v);
 };
 
 #endif /* defined(__match3Test__Sprite__) */

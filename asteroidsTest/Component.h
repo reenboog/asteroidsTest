@@ -94,6 +94,15 @@ public:
     static Component * runWithHidden(Bool hidden);
 };
 
+// blink
+class Blink: public Component {
+private:
+    Blink(){};
+    ~Blink(){};
+public:
+    static Component * runWithBlinks(Int blinks, float inTime);
+};
+
 // delay
 
 class Delay: public Component {
@@ -103,6 +112,9 @@ protected:
 protected:
     void tick(Float dt);
     void setUp();
+    
+    void setTime(Float time);
+    Float getTime();
     
     Delay(Float time);
     virtual ~Delay();
@@ -140,24 +152,6 @@ public:
     static Component * runWithPositionDelta(const Vector2 &pos, Float time);
 private:
     static Component * runWithPosition(const Vector2 &pos, Float time) {return nullptr;};
-};
-
-// transformUV
-// can be applied to sprites only
-class TransformUV: public Component {
-protected:
-    Vector2 _velocity;
-    // calling setUV with this component activated will
-    // produce undesired behaviour
-    UVRect _originalRect;
-protected:
-    TransformUV(const Vector2 &v);
-    ~TransformUV();
-    
-    void setUp();
-    void tick(Float dt);
-public:
-    static Component * runWithVelocity(const Vector2 &v);
 };
 
 // rotateTo
@@ -237,13 +231,13 @@ private:
 
 // sequence
 
-class ComponentSequence: public Component {
+class SequenceComponent: public Component {
 private:
     ComponentPool _components;
     Component *_current;
 protected:
-    ComponentSequence(const ComponentPool &components);
-    ~ComponentSequence();
+    SequenceComponent(const ComponentPool &components);
+    ~SequenceComponent();
     
     void tick(Float dt);
     void setUp();
@@ -255,12 +249,12 @@ public:
 
 // spawn
 
-class ComponentGroup: public InstantUse {
+class GroupComponent: public InstantUse {
 private:
     ComponentPool _components;
 protected:
-    ComponentGroup(const ComponentPool &components);
-    ~ComponentGroup();
+    GroupComponent(const ComponentPool &components);
+    ~GroupComponent();
     
     void doSomething();
     void setUp();
@@ -282,6 +276,22 @@ protected:
     void doSomething();
 public:
     static Component * runWithBlock(Void_VoidFunc block);
+};
+
+// scheduledCallBlock
+
+class ScheduledBlock: public Delay {
+protected:
+    Void_VoidFunc _block;
+protected:
+    ScheduledBlock(Float delay, Void_VoidFunc block);
+    ~ScheduledBlock();
+    
+    void tick(Float dt);
+public:
+    static Component * runWithDelay(Float delay, Void_VoidFunc block);
+private:
+    static Component * runWithTime(Float time) {return nullptr;};
 };
 
 #endif /* defined(__asteroidsTest__Component__) */

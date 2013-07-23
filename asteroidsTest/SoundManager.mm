@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 reenboog. All rights reserved.
 //
 
-#include "SoundManager.h"
+#import "SoundManager.h"
 
 #define kMaxAudioOutputSources 2
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 reenboog. All rights reserved.
 //
 
-#include "Mesh.h"
+#import "Mesh.h"
 
 Mesh::Mesh(): Node(), Blendable() {
     _lineWidth = 10.0;
@@ -14,6 +14,14 @@ Mesh::Mesh(): Node(), Blendable() {
 
 Mesh::~Mesh() {
     
+}
+
+void Mesh::clearVertices() {
+    _vertices.clear();
+}
+
+Int Mesh::getSize() {
+    return _vertices.size();
 }
 
 void Mesh::recalcContentRadius() {
@@ -70,6 +78,11 @@ Bool Mesh::setVertex(UInt index, const VertexPosColor &vertex, Bool skipColor) {
     
     return true;
 }
+
+VertexPosColor Mesh::getVertex(Int index) {
+    return _vertices[index];
+}
+
 
 void Mesh::setColor(const Color4B &color) {
     Blendable::setColor(color);

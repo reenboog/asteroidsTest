@@ -9,12 +9,13 @@
 #ifndef __kingTest__GameScene__
 #define __kingTest__GameScene__
 
-#include "Node.h"
+#import "Node.h"
 
 class Sprite;
 class Field;
 class Label;
 class Pad;
+class Ship;
 
 class Scene: public Node, public Touchable {
 private:
@@ -26,7 +27,11 @@ private:
     Float _time;
     
     Sprite *_back;
+    Ship *_ship;
     Label *_timeLabel;
+    Label *_gameOverLabel;
+    
+    SpritePool _healthIcons;
     
     Size2 _bounds;
     
@@ -43,7 +48,11 @@ public:
     virtual Bool update(Float dt);
     
     void restart();
+    void placeAsteroids();
+    void placeLevelUp();
     void gameOver();
+    
+    void setHealth(Int health);
 
     // score logic
     void applyPoints(Int points);

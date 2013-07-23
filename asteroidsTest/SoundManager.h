@@ -9,12 +9,12 @@
 #ifndef __match3Test__SoundManager__
 #define __match3Test__SoundManager__
 
-#include "Types.h"
+#import "Types.h"
 
 #import <OpenAL/al.h>
 #import <OpenAL/alc.h>
 
-#include <AudioToolbox/AudioToolbox.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 
 @interface AVPlayerListener: NSObject <AVAudioPlayerDelegate> {

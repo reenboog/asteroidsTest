@@ -12,9 +12,12 @@
 #import <vector>
 #import <string>
 #import <map>
+#import <algorithm>
 
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
+
+#import "Common.h"
 
 using namespace std;
 
@@ -28,6 +31,7 @@ typedef float Float;
 typedef double Double;
 
 class Node;
+class Sprite;
 class Component;
 class Intersectable;
 
@@ -70,10 +74,49 @@ public:
         return result;
     }
     
+    Float dot(const Vector2 &v) const {
+        return x * v.x + y * v.y;
+    }
+    
+    Float angleBetween(const Vector2 &v) const {
+        Vector2 a = this->normalized();
+        Vector2 b = v.normalized();
+
+        float angle = atan2f(a.x * b.y - a.y * b.x, a.dot(b));
+        if(fabs(angle) < FLT_EPSILON ) {
+            return 0.f;
+        } else {
+            return angle;
+        }
+    }
+    
+    Vector2 rotate(const Vector2 &pivot, Float angle) {
+        Vector2 r = this->sub(pivot);
+        float t = r.x;
+        float cosa = cosf(degreeToRadians(-angle)), sina = sinf(degreeToRadians(-angle));
+
+        r.x =  t * cosa - r.y * sina;
+        r.y = t * sina + r.y * cosa;
+        r.increase(pivot);
+
+        return r;
+    }
+    
+    Vector2 rotate(Float angle) {
+        return rotate({0.0, 0.0}, angle);
+    }
+    
     void normalize() {
         Float length = this->length();
         x /= length;
         y /= length;
+    }
+    
+    Vector2 normalized() const{
+        Vector2 v = *this;
+        v.normalize();
+        
+        return v;
     }
     
     Vector2& decrease(const Vector2 &r) {
@@ -154,6 +197,7 @@ struct Quad {
 };
     
 typedef vector<Node *> NodePool;
+typedef vector<Sprite *> SpritePool;
 typedef map<string, Texture> TextureMap;
 typedef vector<VertexPosColor> VertexPosColorPool;
 typedef vector<Component *> ComponentPool;

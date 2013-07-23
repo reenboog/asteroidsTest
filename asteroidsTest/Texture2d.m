@@ -1,6 +1,6 @@
 /*
  
- ===== IMPORTANT =====
+ ===== importANT =====
  
  This is sample code demonstrating API, technology or techniques in development.
  Although this sample code has been reviewed for technical accuracy, it is not
@@ -20,7 +20,7 @@
  
  Version: 1.6
  
- Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
+ Disclaimer: importANT:  This Apple software is supplied to you by Apple Inc.
  ("Apple") in consideration of your agreement to the following terms, and your
  use, installation, modification or redistribution of this Apple software
  constitutes acceptance of these terms.  If you do not agree with these terms,

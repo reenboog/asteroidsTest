@@ -11,9 +11,7 @@
 
 #import "Types.h"
 
-#include "Component.h"
-
-//class Component;
+class Component;
 
 class Object {
 private:
@@ -31,6 +29,8 @@ public:
     
     void applyComponent(Component *component, Bool suspend = false);
     void detachComponent(Component *component);
+    
+    void detachAllComponents();
 };
 
 // interfaces

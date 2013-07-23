@@ -9,7 +9,7 @@
 #ifndef __match3Test__SurfaceManager__
 #define __match3Test__SurfaceManager__
 
-#include "Types.h"
+#import "Types.h"
 
 class TextureManager {
 private:

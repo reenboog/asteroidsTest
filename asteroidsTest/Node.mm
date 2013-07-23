@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 reenboog. All rights reserved.
 //
 
-#include "Node.h"
+#import "Node.h"
 
 Node::Node(): Scalable(), Rotatable(), Hideable(), Intersectable() {
     _alive = true;
@@ -117,12 +117,55 @@ Vector2 Node::getLocationInLocalSpace(const Vector2 &pos) {
     return pos.sub(p);
 }
 
+Bool Node::intersectsWithObject(Intersectable *obj) {
+    Vector2 distance = this->getAbsolutePos().sub(((Node *)obj)->getAbsolutePos());
+    
+    return distance.length() <= (this->getContentRadius() + obj->getContentRadius());
+}
+
 Vector2 Node::getAbsolutePos() {
+    Vector2 v = _pos;
+    
+    //v = v.rotate(_rotation);
+    
     if(_parent) {
-        return _pos.add(_parent->getAbsolutePos());
+        /// an old version with no effect of rotation and scaling
+        /// return _pos.add(_parent->getAbsolutePos());
+        ///
+
+        v = v.rotate(_parent->getAbsoluteRotation());
+        v.x *= _parent->getAbsoluteScaleX();
+        v.y *= _parent->getAbsoluteScaleY();
+        
+        v = v.add(_parent->getAbsolutePos());
+        
+        return v;
     }
     
-    return _pos;
+    return v;
+}
+
+Float Node::getAbsoluteRotation() {
+    if(_parent) {
+        return _rotation + _parent->getAbsoluteRotation();
+    }
+    return _rotation;
+}
+
+Float Node::getAbsoluteScaleX() {
+    if(_parent) {
+        return _scaleX * _parent->getAbsoluteScaleX();
+    }
+    
+    return _scaleX;
+}
+
+Float Node::getAbsoluteScaleY() {
+    if(_parent) {
+        return _scaleY * _parent->getAbsoluteScaleY();
+    }
+    
+    return _scaleX;
 }
 
 void Node::setParent(Node *newParent) {
@@ -131,12 +174,20 @@ void Node::setParent(Node *newParent) {
     _parent = newParent;
 }
 
+void Node::setTag(Int tag) {
+    _tag = tag;
+}
+
+Int Node::getTag() {
+    return _tag;
+}
+
 void Node::maybeAddChildren() {
     if(!_childrenToAdd.empty()) {
         
         for(Node *child: _childrenToAdd) {
             _children.push_back(child);
-            child->setParent(this);
+            //child->setParent(this);
         }
     
         reorderChildren();
@@ -146,10 +197,11 @@ void Node::maybeAddChildren() {
 }
 
 Bool Node::addChild(Node *child) {
-    if(isChild(child)) {
+    if(isChild(child) || find(_childrenToAdd.begin(), _childrenToAdd.end(), child) != _childrenToAdd.end()) {
         return false;
     }
-    
+
+    child->setParent(this);
     _childrenToAdd.push_back(child);
     
     return true;
@@ -159,6 +211,9 @@ void Node::maybeRemoveChildren() {
     if(!_childrenToRemove.empty()) {
         for(Node *child: _childrenToRemove) {
             _children.erase(remove(_children.begin(), _children.end(), child));
+            
+            child->setParent(nullptr);
+            
             delete child;
         }
         
@@ -166,12 +221,18 @@ void Node::maybeRemoveChildren() {
     }
 }
 
+Bool Node::isAlive() {
+    return _alive;
+}
+
+void Node::setAlive(Bool alive) {
+    _alive = alive;
+}
+
 Bool Node::removeChild(Node *child) {
-    if(!isChild(child)) {
+    if(!isChild(child) || find(_childrenToRemove.begin(), _childrenToRemove.end(), child) != _childrenToRemove.end()) {
         return false;
     }
-    
-    child->setParent(nullptr);
     
     _childrenToRemove.push_back(child);
     

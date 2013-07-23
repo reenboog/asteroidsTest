@@ -9,47 +9,57 @@
 #ifndef __asteroidsTest__BoundToArea__
 #define __asteroidsTest__BoundToArea__
 
-#include "Component.h"
-#include "Object.h"
+#import "Component.h"
+#import "Object.h"
 
 class BoundToArea: public Component, public InstanceCollector<BoundToArea> {
 protected:
     Vector2 _initialPos;
-    Vector2 _areaPos;
-    Size2 _areaSize;
+    Rect4 _area;
 protected:
     virtual ~BoundToArea();
-    BoundToArea(const Vector2 &pos, const Size2 &size);
+    BoundToArea(const Rect4 &area);
     
     void setUp();
     void tick(Float dt);
 public:
-    static Component * runWithArea(const Vector2 &pos, const Size2 &size);
+    static Component * runWithArea(const Rect4 &area);
 };
 
-BoundToArea::~BoundToArea(){
+inline BoundToArea::~BoundToArea(){
 }
 
-BoundToArea::BoundToArea(const Vector2 &pos, const Size2 &size): Component(), InstanceCollector<BoundToArea>(this) {
-    _areaPos = pos;
-    _areaSize = size;
+inline BoundToArea::BoundToArea(const Rect4 &area): Component(), InstanceCollector<BoundToArea>(this) {
+    _area = area;
 }
 
-Component * BoundToArea::runWithArea(const Vector2 &pos, const Size2 &size) {
-    return new BoundToArea(pos, size);
+inline Component * BoundToArea::runWithArea(const Rect4 &area) {
+    return new BoundToArea(area);
 }
 
-void BoundToArea::setUp() {
+inline void BoundToArea::setUp() {
     _initialPos = dynamic_cast<Movable *>(_target)->getPos();
 }
 
-void BoundToArea::tick(Float dt) {
+inline void BoundToArea::tick(Float dt) {
     Movable *t = dynamic_cast<Movable *>(_target);
     Vector2 pos = t->getPos();
     
-    if(pos.x < _areaPos.x || pos.y < _areaPos.y || pos.x > _areaPos.x + _areaSize.w || pos.y > _areaPos.y + _areaSize.h) {
-        t->setPos(_initialPos);
+    Vector2 newPos = pos;
+    
+    if(pos.x < _area.x) {
+        newPos.x = _area.x;
+    } else if(pos.x > _area.x + _area.w) {
+        newPos.x = _area.x + _area.w;
     }
+    
+    if(pos.y < _area.y) {
+        newPos.y = _area.y;
+    } else if(pos.y > _area.y + _area.h) {
+        newPos.y = _area.y + _area.h;
+    }
+
+    t->setPos(newPos);
 }
 
 template class InstanceCollector<BoundToArea>;

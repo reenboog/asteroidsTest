@@ -9,7 +9,7 @@
 #ifndef __asteroidsTest__Pad__
 #define __asteroidsTest__Pad__
 
-#include "Sprite.h"
+#import "Sprite.h"
 
 #define kMaxPadDisplacement 30
 
@@ -18,13 +18,19 @@ private:
     Sprite *_img;
     
     Vector2 _value;
+    Float _maxScale;
     
-    Void_VoidFunc _block;
+    Void_VoidFunc _touchBeganBlock;
+    Void_VoidFunc _touchEndedBlock;
+    Void_VoidFunc _touchMovedBlock;
 public:
     virtual ~Pad();
-    Pad(const string &file, Void_VoidFunc block);
+    Pad(const string &file, Float maxScale, Void_VoidFunc began, Void_VoidFunc ended, Void_VoidFunc moved);
     
-    void applyDisplacement(const Vector2 &d);
+    void touchBegan(const Vector2 &v);
+    void touchMoved(const Vector2 &v);
+    void touchEnded(const Vector2 &v);
+
     Vector2 getValue();
 };
 

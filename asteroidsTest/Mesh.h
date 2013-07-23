@@ -12,7 +12,7 @@
 #import "Node.h"
 
 class Mesh: public Node, public Blendable {
-private:
+protected:
     Float _lineWidth;
     
     VertexPosColorPool _vertices;
@@ -22,9 +22,13 @@ public:
     Mesh();
     ~Mesh();
     
+    void clearVertices();
+    
     void render();
     
     Bool setVertex(UInt index, const VertexPosColor &vertex, Bool skipColor = true);
+    VertexPosColor getVertex(Int index);
+    Int getSize();
     
     void setLineWidth(Float width);
     Float getLineWidth();

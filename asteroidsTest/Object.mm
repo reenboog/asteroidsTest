@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 reenboog. All rights reserved.
 //
 
-#include "Object.h"
+#import "Object.h"
+#import "Component.h"
 
 Object::Object() {
     //
@@ -43,9 +44,12 @@ void Object::maybeRemoveComponents() {
 
 void Object::applyComponent(Component *component, Bool suspend) {
     if(component) {
-        _componentsToAdd.push_back(component);
-        // should I attach this in maybeAdd...?
-        component->attachToTarget(this, suspend);
+        if(find(_components.begin(), _components.end(), component) == _components.end() &&
+           find(_componentsToAdd.begin(), _componentsToAdd.end(), component) == _componentsToAdd.end()) {
+            _componentsToAdd.push_back(component);
+            // should I attach this in maybeAdd...?
+            component->attachToTarget(this, suspend);
+        }
     }
 }
 
@@ -53,9 +57,15 @@ void Object::detachComponent(Component *component) {
     if(component) {
         auto compIt = find(_components.begin(), _components.end(), component);
         
-        if(compIt != _components.end()) {
+        if(compIt != _components.end() && find(_componentsToRemove.begin(), _componentsToRemove.end(), component) == _componentsToRemove.end()) {
             _componentsToRemove.push_back(component);
         }
+    }
+}
+
+void Object::detachAllComponents() {
+    for(Component *component: _components) {
+        this->detachComponent(component);
     }
 }
 

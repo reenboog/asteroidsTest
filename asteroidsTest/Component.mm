@@ -6,9 +6,8 @@
 //  Copyright (c) 2013 reenboog. All rights reserved.
 //
 
-#include "Component.h"
-#include "Object.h"
-#include "Sprite.h"
+#import "Component.h"
+#import "Object.h"
 
 //#import "Node.h"
 
@@ -114,6 +113,21 @@ void Hider::doSomething(){
     dynamic_cast<Hideable *>(_target)->setHidden(_hidden);
 }
 
+// blink
+
+Component * Blink::runWithBlinks(Int blinks, float inTime) {
+    
+    Float delay = 0.5 * inTime / blinks;
+    ComponentPool sequence;
+    for(Int i = 0; i < blinks; ++i) {
+        sequence.push_back(Hider::runWithHidden(true));
+        sequence.push_back(Delay::runWithTime(delay * i));
+        sequence.push_back(Hider::runWithHidden(false));
+        sequence.push_back(Delay::runWithTime(delay * i));
+    }
+    return SequenceComponent::runWithComponents(sequence);
+}
+
 // delay
 
 Delay::Delay(Float time): Component() {
@@ -133,6 +147,14 @@ Component * Delay::runWithTime(Float time) {
 
 void Delay::setUp() {
     _currentTime = 0.0;
+}
+
+void Delay::setTime(Float time) {
+    _time = time;
+}
+
+Float Delay::getTime() {
+    return _time;
 }
 
 void Delay::tick(Float dt) {
@@ -206,38 +228,6 @@ void MoveBy::setUp() {
     _startPos = dynamic_cast<Movable *>(_target)->getPos();
     _endPos = _startPos.add(_endPos);
     _delta = _endPos.sub(_startPos);
-}
-
-// transformUV
-
-TransformUV::~TransformUV() {
-}
-
-TransformUV::TransformUV(const Vector2 &v) {
-    _velocity = v;
-}
-
-Component * TransformUV::runWithVelocity(const Vector2 &v) {
-    return new TransformUV(v);
-}
-
-void TransformUV::setUp() {
-    Sprite *t = dynamic_cast<Sprite *>(_target);
-    _originalRect = t->getUV();
-}
-
-void TransformUV::tick(Float dt) {
-    Sprite *t = dynamic_cast<Sprite *>(_target);
-    UVRect uv = t->getUV();
-    
-    // bug: clamp texture coords to [0..1]!
-    // uv overflow is possible!
-    uv._0.u += _velocity.x * dt;
-    uv._0.u += _velocity.y * dt;
-    uv._1.u += _velocity.x * dt;
-    uv._1.u += _velocity.y * dt;
-    
-    t->setUV(uv);
 }
 
 // rotateTo
@@ -400,11 +390,11 @@ void FadeTo::tick(Float dt) {
 
 // componentSequence
 
-ComponentSequence::~ComponentSequence() {
+SequenceComponent::~SequenceComponent() {
     //printf("- ComponentSequence destroyed\n");
 }
 
-ComponentSequence::ComponentSequence(const ComponentPool &components): Component() {
+SequenceComponent::SequenceComponent(const ComponentPool &components): Component() {
     _components = components;
 
     _current = nullptr;
@@ -412,14 +402,14 @@ ComponentSequence::ComponentSequence(const ComponentPool &components): Component
     //printf("+ ComponentSequence created\n");
 }
 
-Component * ComponentSequence::runWithComponents(const ComponentPool &components) {
-    return new ComponentSequence(components);
+Component * SequenceComponent::runWithComponents(const ComponentPool &components) {
+    return new SequenceComponent(components);
 }
 
-void ComponentSequence::setUp() {
+void SequenceComponent::setUp() {
 }
 
-void ComponentSequence::stop() {
+void SequenceComponent::stop() {
     Component::stop();
     
     if(_current) {
@@ -427,7 +417,7 @@ void ComponentSequence::stop() {
     }
 }
 
-void ComponentSequence::tick(Float dt) {
+void SequenceComponent::tick(Float dt) {
     if(_components.empty()) {
         done();
     } else {
@@ -446,22 +436,22 @@ void ComponentSequence::tick(Float dt) {
 
 // spawn
 
-ComponentGroup::~ComponentGroup() {
+GroupComponent::~GroupComponent() {
 }
 
-ComponentGroup::ComponentGroup(const ComponentPool &components): InstantUse() {
+GroupComponent::GroupComponent(const ComponentPool &components): InstantUse() {
     _components = components;
 }
 
-Component * ComponentGroup::runWithComponents(const ComponentPool &components) {
-    return new ComponentGroup(components);
+Component * GroupComponent::runWithComponents(const ComponentPool &components) {
+    return new GroupComponent(components);
 }
 
-void ComponentGroup::setUp() {
+void GroupComponent::setUp() {
     //
 }
 
-void ComponentGroup::doSomething() {
+void GroupComponent::doSomething() {
     for(Component *component: _components) {
         _target->applyComponent(component);
     }
@@ -486,4 +476,26 @@ void CallBlock::setUp() {
 
 void CallBlock::doSomething() {
     _block();
+}
+
+// scheduledCallBlock
+
+ScheduledBlock::~ScheduledBlock() {
+}
+
+ScheduledBlock::ScheduledBlock(Float delay, Void_VoidFunc block): Delay(delay) {
+    _block = block;
+}
+
+Component * ScheduledBlock::runWithDelay(Float delay, Void_VoidFunc block) {
+    return new ScheduledBlock(delay, block);
+}
+
+void ScheduledBlock::tick(Float dt) {
+    _currentTime += dt;
+    
+    if(_currentTime >= _time) {
+        _currentTime = 0.0;
+        _block();
+    }
 }
