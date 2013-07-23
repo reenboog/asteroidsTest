@@ -94,7 +94,7 @@ Bool Scene::init() {
     for(Int i = 0; i < kShipMaxHealth; ++i) {
         Sprite *icon = new Sprite("healthIcon.png");
         
-        const Vector2 base = {140, 730};
+        const Vector2 base = {0.13f * bounds.size.width, 0.95f * bounds.size.height};
         Vector2 pos = base.sub({(i * 1.5f) * icon->getContentRadius(), 0});
         icon->setPos(pos);
         
