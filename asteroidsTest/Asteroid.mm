@@ -57,7 +57,7 @@ Asteroid::Asteroid(Int level, const Vector2 &pos): Mesh() {
     
     Int multiplier = rand() % 2 ? -1 : 1;
     Vector2 randDir = inertion.mul(0.5);
-    randDir = {1.0f * (rand() % static_cast<Int>(randDir.x)), 1.0f * (rand() % static_cast<Int>(randDir.y))};
+    //randDir = {1.0f * (rand() % static_cast<Int>(randDir.x + 1)), 1.0f * (rand() % static_cast<Int>(randDir.y + 1))};
     randDir = randDir.mul(multiplier);
     
     inertion.increase(randDir);
